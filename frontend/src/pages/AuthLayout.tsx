@@ -9,7 +9,7 @@ const AuthLayout = () => {
 
   let location = useLocation();
   if (!user && isAuthChecked) {
-    return <Navigate to="/login" replace state={{from: location}}/>;
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
   return <Outlet />;

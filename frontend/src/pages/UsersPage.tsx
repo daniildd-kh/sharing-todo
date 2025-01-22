@@ -18,7 +18,7 @@ const UsersPage = () => {
       {loading && <p>Загрузка...</p>}
       {users &&
         users.map((user) => (
-          <li key={user.id} style={{listStyle: 'none'}}>
+          <li key={user.id} style={{ listStyle: "none" }}>
             <div>
               <p>{user.name}</p>
               <p>{user.email}</p>

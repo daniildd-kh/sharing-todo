@@ -1,0 +1,8 @@
+@use "./reset.scss";
+@use "./variables.scss";
+@use "./mixins.scss";
+@use "./fonts.scss";
+
+body {
+  font-family: "Raleway-Variable", sans-serif;
+}
