@@ -1,0 +1,25 @@
+{
+  "name": "sharing-todo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,scss}": "prettier --write",
+    "*.md": "prettier --write"
+  },
+  "dependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.1",
+    "prettier": "^3.4.2"
+  }
+}

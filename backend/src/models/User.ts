@@ -1,11 +1,11 @@
 import mongoose, { Schema, Types } from "mongoose";
 
-export interface IUser extends Document{
+export interface IUser extends Document {
   _id: Types.ObjectId;
   name: string;
   email: string;
   password: string;
-  tasks: Types.ObjectId;
+  tasks: Types.ObjectId[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -15,7 +15,7 @@ const UserSchema = new Schema<IUser>(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, minlength: 6, select: false },
-    tasks: [{ type: Types.ObjectId, ref: "Task" }],
+    tasks: [{ type: Schema.Types.ObjectId, ref: "Task" }],
   },
   { timestamps: true }
 );

@@ -1,10 +1,19 @@
 import { Router } from "express";
+import {
+  addTask,
+  getAllTasks,
+  getUserTasks,
+  removeTask,
+  updateTask,
+} from "../controllers/taskController";
+import auth from "../middlewares/auth";
 
 const tasksRouter = Router();
 
-// tasksRouter.get('/',auth ,getTasks);
-// tasksRouter.post('/', addTask);
-// tasksRouter.put('/:id', updateTask);
-// tasksRouter.delete('/:id', deleteTask);
+tasksRouter.get("/", getAllTasks);
+tasksRouter.get("/me", getUserTasks);
+tasksRouter.post("/", addTask);
+tasksRouter.delete("/:id", removeTask);
+tasksRouter.put("/:id", updateTask);
 
 export default tasksRouter;

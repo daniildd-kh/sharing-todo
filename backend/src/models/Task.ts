@@ -1,22 +1,24 @@
-import mongoose, { Schema, Types } from "mongoose";
+import mongoose, { Schema, Types, Document } from "mongoose";
+import { UserModel } from "./User";
 
-export interface ITask extends Document{
+export interface ITask extends Document {
   _id: Types.ObjectId;
   title: string;
   description?: string;
-  status: 'completed' | "inProgress" | "unfinished" | "waitingForApproval";
+  status: "completed" | "inProgress" | "unfinished" | "waitingForApproval";
   isImportant: boolean;
   subtasks: Types.ObjectId | null;
   owner: Types.ObjectId;
 }
 
-const subtaskValidator = async (taskId: Types.ObjectId) =>{
-  if(!taskId){
+const subtaskValidator = async function (taskId: Types.ObjectId) {
+  if (!taskId) {
     return true;
   }
-  const task = await TaskModel.findById(taskId);
+  const Task = mongoose.model<ITask>("Task");
+  const task = await Task.findById(taskId);
   return !(task && task.subtasks);
-}
+};
 
 const TaskSchema = new Schema<ITask>(
   {
@@ -28,13 +30,28 @@ const TaskSchema = new Schema<ITask>(
       default: "unfinished",
     },
     isImportant: { type: Boolean, default: false },
-    subtasks: { type: Types.ObjectId, ref: "Task", 
-      validate:{validator: subtaskValidator, message: 'Подзадача не может иметь вложенные подзадачи'}, default: null },
-    owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    
+    subtasks: {
+      type: Types.ObjectId,
+      ref: "Task",
+      validate: {
+        validator: subtaskValidator,
+        message: "Подзадача не может иметь вложенные подзадачи",
+      },
+      default: null,
+    },
+    owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
   },
   { timestamps: true }
 );
 
+TaskSchema.post("save", async function updateUserTasks() {
+  const user = await UserModel.findById(this.owner);
+  await user?.tasks.push(this._id);
+  await user?.save();
+});
+
+TaskSchema.post("findOneAndDelete", async function removeUserTask(task) {
+  await UserModel.findByIdAndUpdate(task.owner, { $pull: { tasks: task._id } });
+});
 
 export const TaskModel = mongoose.model<ITask>("Task", TaskSchema);
