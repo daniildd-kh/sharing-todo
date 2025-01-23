@@ -1,8 +1,11 @@
 @use "./reset.scss";
-@use "./variables.scss";
+@use "./variables.scss" as *;
 @use "./mixins.scss";
 @use "./fonts.scss";
 
 body {
   font-family: "Raleway-Variable", sans-serif;
+  background-color: $backgroundColor;
+  line-height: 1.5;
+  color: $fontColorDark;
 }
