@@ -7,7 +7,7 @@ interface TextareaProps {
   name?: string;
 }
 
-const Textarea = ({ value, onChange, name }: TextareaProps) => {
+const Textarea = ({ value, onChange, name, ...props }: TextareaProps) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -25,6 +25,7 @@ const Textarea = ({ value, onChange, name }: TextareaProps) => {
       onChange={handleChange}
       name={name}
       className={style.textarea}
+      {...props}
     />
   );
 };

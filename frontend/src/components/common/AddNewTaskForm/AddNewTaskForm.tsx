@@ -3,7 +3,7 @@ import { createInput, createInputBase } from "../Input/Input";
 import { ITask } from "../../../models";
 import { Button } from "../Button/Button";
 import { SmallText } from "../Typography/Typography";
-import IconSvg, { IconName } from "../Icons/IconSvg";
+import IconSvg from "../Icons/IconSvg";
 import AccordionWithTrigger from "../Accordion/AccordionWithTrigger";
 import clsx from "clsx";
 import { StatusType } from "../../../models";
@@ -112,7 +112,6 @@ const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
           <Button className={style.cancel} onClick={onClose} type="button">
             <SmallText>Отмена</SmallText>
           </Button>
-          {/*BUG: когда форма валидна, то происходит ререндер и сброс фокуса с поля*/}
           <Button className={style.addButton} type="submit" disabled={!isValid}>
             <SmallText>Добавить задачу</SmallText>
           </Button>

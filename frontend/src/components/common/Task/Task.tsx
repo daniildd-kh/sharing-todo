@@ -3,8 +3,8 @@ import IconSvg, { IconName } from "../Icons/IconSvg";
 import { LargeText } from "../Typography/Typography";
 import clsx from "clsx";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { Input } from "../Input/Input";
 import Textarea from "../Textarea/Textarea";
+import { createInput } from "../Input/Input";
 
 type statusVariant =
   | "unfinished"
@@ -26,6 +26,7 @@ interface TaskProps {
 }
 
 function withTask(defaults: TaskProps) {
+  const Input = createInput();
   return function Task({
     status = defaults.status || "unfinished",
     isWarning = defaults.isWarning || false,
@@ -63,15 +64,21 @@ function withTask(defaults: TaskProps) {
       clearTimeout(delayTimer);
       e.stopPropagation();
       setIsChange(true);
+      setIsOpen(true);
     };
 
     const handleSingleClick = (e: React.MouseEvent) => {
+      clearTimeout(delayTimer);
       delayTimer = setTimeout(() => setIsOpen(!isOpen), 200);
       e.stopPropagation();
     };
 
     const handleOutsideClick = (e: MouseEvent) => {
-      if (taskRef.current && !taskRef.current.contains(e.target as Node)) {
+      if (
+        taskRef.current &&
+        !taskRef.current.contains(e.target as Node) &&
+        !(e.target as HTMLElement).closest("input")
+      ) {
         setIsChange(false);
         setIsOpen(false);
       }
@@ -108,6 +115,7 @@ function withTask(defaults: TaskProps) {
               name="title"
               onChange={changeTask}
               onClick={(e) => e.stopPropagation()}
+              register={undefined}
               onBlur={() => {
                 console.log("blur");
               }}

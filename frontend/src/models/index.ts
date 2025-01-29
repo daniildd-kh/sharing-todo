@@ -9,8 +9,8 @@ export interface ITask {
   description: string;
   status: StatusType;
   isImportant: boolean;
-  subtasks?: ITask;
-  owner?: IUser;
+  // subtasks?: ITask;
+  owner?: string;
 }
 
 export interface IUser {

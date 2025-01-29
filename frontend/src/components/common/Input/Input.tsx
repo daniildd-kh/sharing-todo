@@ -1,47 +1,53 @@
 import React, { ChangeEvent, ReactHTMLElement } from "react";
 import clsx from "clsx";
 import style from "./Input.module.scss";
+import { FieldValues, Path, UseFormRegister } from "react-hook-form";
 
 type inputVariant = "text" | "password" | "email";
 type inputStyle = "baseText" | "title";
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps<T extends FieldValues>
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   inputType?: inputVariant;
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   className?: string;
+  name: Path<T>;
+  register?: UseFormRegister<T>;
   placeholder?: string;
   onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
-  name?: string;
   styleType?: inputStyle;
 }
 
-function withInput(defaults: InputProps) {
+function withInput<T extends FieldValues>(defaults: Partial<InputProps<T>>) {
   return function Input({
     inputType = defaults.inputType || "text",
     value,
-    onChange,
     className,
     placeholder,
     onClick,
+    onChange,
     name,
+    register,
     styleType = defaults.styleType || "title",
     ...props
-  }: InputProps) {
+  }: InputProps<T>) {
     return (
       <input
         value={value}
-        name={name}
+        {...(register ? register(name) : {})}
         onClick={onClick}
         className={clsx(style[styleType], style.input, className)}
         placeholder={placeholder}
         onChange={onChange}
         type={inputType}
+        name={name}
         {...props}
       />
     );
   };
 }
 
-export const Input = withInput({});
-export const InputBase = withInput({ styleType: "baseText" });
+export const createInput = <T extends FieldValues>() => withInput<T>({});
+export const createInputBase = <T extends FieldValues>() =>
+  withInput<T>({ styleType: "baseText" });
