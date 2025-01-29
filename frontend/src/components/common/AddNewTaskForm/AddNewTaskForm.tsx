@@ -1,13 +1,15 @@
-import React, { ChangeEvent, useState } from "react";
 import style from "./AddNewTaskForm.module.scss";
-import { Input, InputBase } from "../Input/Input";
+import { createInput, createInputBase } from "../Input/Input";
 import { ITask } from "../../../models";
 import { Button } from "../Button/Button";
-import { SmallText, Text } from "../Typography/Typography";
+import { SmallText } from "../Typography/Typography";
 import IconSvg, { IconName } from "../Icons/IconSvg";
 import AccordionWithTrigger from "../Accordion/AccordionWithTrigger";
 import clsx from "clsx";
 import { StatusType } from "../../../models";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { boolean, object, ObjectSchema, string } from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 interface NewTaskStatusesProps {
   setStatus: (status: StatusType) => void;
@@ -51,6 +53,7 @@ const NewTaskStatuses = ({
       {statuses.map((status, index) => (
         <div className={style.status} key={index}>
           <Button
+            type="button"
             className={clsx(
               style.button,
               style.accordionItem,
@@ -69,71 +72,83 @@ const NewTaskStatuses = ({
     </div>
   );
 };
+
 interface AddNewTaskFormProps {
   onClose?: () => void;
 }
+const taskSchema: ObjectSchema<ITask> = object({
+  title: string().required(),
+  description: string().required(),
+  status: string<StatusType>().required(),
+  isImportant: boolean().required(),
+  owner: string().optional(),
+});
 
 const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
-  const [newTask, setNewTask] = useState<ITask>({
-    title: "",
-    description: "",
-    status: "unfinished",
-    isImportant: false,
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { isValid },
+  } = useForm<ITask>({
+    mode: "onSubmit",
+    defaultValues: {
+      title: "",
+      description: "",
+      status: "unfinished",
+      isImportant: false,
+    },
+    resolver: yupResolver(taskSchema),
   });
-  // TODO: добавить нормальную валидацию
 
-  const isFormValid =
-    newTask.title.trim() !== "" && newTask.description.trim() !== "";
+  const currentStatus = watch("status");
+  const isImportant = watch("isImportant");
+  const onSubmit: SubmitHandler<ITask> = (data) => console.log(data);
+
+  const Input = createInput<ITask>();
+  const InputBase = createInputBase<ITask>();
 
   const handleStatus = (status: StatusType) => {
-    setNewTask((prevData) => ({ ...prevData, status }));
+    setValue("status", status);
   };
+
   const handleIsImportant = () => {
-    setNewTask((prevData) => ({
-      ...prevData,
-      isImportant: !newTask.isImportant,
-    }));
+    setValue("isImportant", !isImportant);
   };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("sent");
-  };
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setNewTask((prevData) => ({ ...prevData, [name]: value }));
-  };
-
   return (
-    <form onSubmit={handleSubmit} className={style.form}>
+    <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
       <div className={style.content}>
         <Input
           placeholder="Заголовок задачи"
+          register={register}
           name="title"
-          value={newTask.title}
-          onChange={handleChange}
           className={style.title}
         />
         <InputBase
           placeholder="Описание"
           name="description"
-          value={newTask.description}
-          onChange={handleChange}
+          register={register}
           className={style.description}
         />
+
         <div className={style.setting}>
           <Button
             className={clsx(style.button, {
-              [style.exclamation]: newTask.isImportant,
+              [style.exclamation]: isImportant,
             })}
             onClick={handleIsImportant}
+            type="button"
           >
             <IconSvg name="exclamation" size={13} />
             <SmallText>Приоритет</SmallText>
           </Button>
           <AccordionWithTrigger
             trigger={
-              <Button className={clsx(style.button, style.trigger)}>
+              <Button
+                className={clsx(style.button, style.trigger)}
+                type="button"
+              >
                 <IconSvg name="tags" size={13} />
                 <SmallText>Статус</SmallText>
               </Button>
@@ -142,7 +157,7 @@ const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
             {
               <NewTaskStatuses
                 setStatus={handleStatus}
-                currentStatus={newTask.status}
+                currentStatus={currentStatus}
               />
             }
           </AccordionWithTrigger>
@@ -155,14 +170,11 @@ const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
           <SmallText className={style.bold}>Входящие</SmallText>
         </div>
         <div className={style.actions}>
-          <Button className={style.cancel} onClick={onClose}>
+          <Button className={style.cancel} onClick={onClose} type="button">
             <SmallText>Отмена</SmallText>
           </Button>
-          <Button
-            className={style.addButton}
-            type="submit"
-            disabled={!isFormValid}
-          >
+          {/*BUG: когда форма валидна, то происходит ререндер и сброс фокуса с поля*/}
+          <Button className={style.addButton} type="submit" disabled={!isValid}>
             <SmallText>Добавить задачу</SmallText>
           </Button>
         </div>
