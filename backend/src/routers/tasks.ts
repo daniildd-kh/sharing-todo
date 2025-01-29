@@ -11,7 +11,7 @@ import auth from "../middlewares/auth";
 const tasksRouter = Router();
 
 tasksRouter.get("/", getAllTasks);
-tasksRouter.get("/me", getUserTasks);
+tasksRouter.get("/me", auth, getUserTasks);
 tasksRouter.post("/", addTask);
 tasksRouter.delete("/:id", removeTask);
 tasksRouter.put("/:id", updateTask);

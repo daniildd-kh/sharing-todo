@@ -1,0 +1,21 @@
+@use "@/styles/mixins.scss" as *;
+@use "@/styles/variables.scss" as *;
+
+.logo {
+  border-radius: 50%;
+  @include size(40px);
+  @include center();
+  color: $colorDark;
+  background-color: $colorSecondary;
+}
+
+.logoContainer {
+  display: flex;
+  gap: 20px;
+  vertical-align: center;
+  align-items: center;
+}
+
+.text {
+  font-weight: $fontWeightBold;
+}

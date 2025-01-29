@@ -1,0 +1,131 @@
+@use "@/styles/variables.scss" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
+.button {
+  color: rgba($fontColorDark, 0.8);
+  gap: 5px;
+  border: 1px solid rgba($fontColorDark, 0.5);
+  border-radius: 3px;
+  padding-inline: 6px;
+  padding-block: 4px;
+
+  &:hover {
+    background-color: rgba($colorAccent, 0.3);
+  }
+
+  &.accordionItem {
+    border: none;
+
+    &.unfinished:hover {
+      background-color: inherit;
+      color: $colorDark;
+    }
+
+    &.inProgress:hover {
+      background-color: inherit;
+      color: $colorInProgress;
+    }
+    &.waitingForApproval:hover {
+      background-color: inherit;
+      color: $colorWaiting;
+    }
+    &.completed:hover {
+      background-color: inherit;
+      color: $colorDone;
+    }
+  }
+}
+
+.setting {
+  display: flex;
+  gap: 10px;
+}
+
+.status {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.statuses {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.exclamation {
+  background-color: rgba($colorAccent, 0.3);
+}
+
+.trigger {
+  &:hover {
+    background-color: rgba($colorPrimary, 0.3);
+  }
+}
+
+.content {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.divider {
+  margin: 10px 0;
+  width: 100%;
+  height: 1px;
+  background-color: rgba($colorDark, 0.1);
+}
+.bottom {
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.inbox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bold {
+  font-weight: $fontWeightBold;
+}
+
+.actions {
+  display: flex;
+  gap: 5px;
+}
+
+.cancel {
+  background-color: rgba($colorDark, 0.2);
+  color: $fontColorDark;
+  padding: 8px 10px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: rgba($colorDark, 0.3);
+  }
+}
+
+.addButton {
+  padding: 8px 10px;
+  background-color: rgba($colorPrimary, 0.8);
+  color: $colorLight;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $colorPrimary;
+  }
+}

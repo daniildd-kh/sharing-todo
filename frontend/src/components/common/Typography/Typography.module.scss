@@ -1,0 +1,31 @@
+@use "@/styles/variables.scss" as *;
+
+.base {
+  font-family: $fontFamily;
+  line-height: 1.5;
+}
+
+.title {
+  font-size: $fontSizeTitle;
+  font-weight: $fontWeightExtraBold;
+}
+
+.subtitle {
+  font-size: $fontSizeSubTitle;
+  font-weight: $fontWeightExtraBold;
+}
+
+.largeText {
+  font-size: $fontSizeMedium;
+  font-weight: $fontWeightBold;
+}
+
+.text {
+  font-size: $fontSizeBase;
+  font-weight: $fontWeightRegular;
+}
+
+.smallText {
+  font-size: $fontSizeSmall;
+  font-weight: $fontWeightRegular;
+}

@@ -6,6 +6,7 @@ import LoginForm from "../components/LoginForm";
 import { fetchLogout } from "../store/actions";
 import RegistrationForm from "../components/RegistrationForm";
 import { NavLink, useLocation } from "react-router";
+import { Task } from "../components/common/Task/Task";
 
 const HomePage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,8 +17,10 @@ const HomePage = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       {user && <p>{`Добро пожаловать${user?.name}`}</p>}
-
-      <NavLink to="/login">Войти</NavLink>
+      <div
+        style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+      ></div>
+      {!user && <NavLink to="/login">Войти</NavLink>}
       <NavLink to="/users">Все пользователи</NavLink>
       {user && <button onClick={() => dispatch(fetchLogout())}>Выйти</button>}
     </div>

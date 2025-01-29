@@ -1,0 +1,18 @@
+@use "@/styles/variables.scss" as *;
+
+.menu {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.menuItem {
+  flex-grow: 1;
+}
+
+.link {
+  color: $fontColorDark;
+  font-size: $fontSizeBase;
+  font-weight: $fontWeightRegular;
+  text-decoration: none;
+}

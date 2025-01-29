@@ -10,14 +10,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "./store/store";
 import { checkAuth } from "./store/actions";
 import { RootState } from "./store/store";
+import TodoPage from "./pages/TodoPage/TodoPage";
+import { authChecked } from "./store/authSlices";
+import Layout from "./containers/Layout/Layout";
 
 function App() {
   const { user, loading } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    if (localStorage.getItem("accessToken") && !user) {
-      dispatch(checkAuth());
+    if (!user) {
+      const token = localStorage.getItem("accessToken");
+      if (token) {
+        dispatch(checkAuth());
+      } else {
+        dispatch(authChecked());
+      }
     }
   }, [dispatch, user]);
 
@@ -28,15 +36,18 @@ function App() {
   return (
     <>
       <Routes>
-        <Route index element={<HomePage />} />
-        <Route path="/" element={<HomePage />} />
+        <Route element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
 
-        <Route element={<UnAuthLayout />}>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/registration" element={<RegistrationPage />} />
-        </Route>
-        <Route element={<AuthLayout />}>
-          <Route path="/users" element={<UsersPage />} />
+          <Route element={<UnAuthLayout />}>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/registration" element={<RegistrationPage />} />
+          </Route>
+          <Route element={<AuthLayout />}>
+            <Route path="/users" element={<UsersPage />} />
+            <Route path="/todo" element={<TodoPage />} />
+          </Route>
         </Route>
       </Routes>
     </>

@@ -6,8 +6,8 @@ import { useLocation } from "react-router";
 
 const AuthLayout = () => {
   const { user, isAuthChecked } = useSelector((state: RootState) => state.auth);
-
   let location = useLocation();
+
   if (!user && isAuthChecked) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }

@@ -1,0 +1,15 @@
+@use "@/styles/variables.scss" as *;
+
+.textarea {
+  overflow: hidden;
+  display: block;
+  font-family: $fontFamily;
+  line-height: 1.5;
+  font-size: $fontSizeBase;
+  font-weight: $fontWeightRegular;
+  border: none;
+  outline: none;
+  padding: 0;
+  max-height: 200px;
+  resize: none;
+}

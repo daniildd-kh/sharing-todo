@@ -29,7 +29,12 @@ const handlePending = (state: AuthState) => {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    authChecked: (state) => {
+      state.user = null;
+      state.isAuthChecked = true;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchLogin.pending, handlePending)
@@ -68,9 +73,12 @@ const authSlice = createSlice({
       .addCase(checkAuth.rejected, (state, action) => {
         state.loading = false;
         state.isAuthChecked = true;
+        state.user = null;
         state.error = action.error.message || "Ошибка проверки";
       });
   },
 });
+
+export const { authChecked } = authSlice.actions;
 
 export default authSlice.reducer;

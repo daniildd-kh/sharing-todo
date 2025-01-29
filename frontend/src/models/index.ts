@@ -1,10 +1,16 @@
-interface ITask {
+export type StatusType =
+  | "completed"
+  | "inProgress"
+  | "unfinished"
+  | "waitingForApproval";
+
+export interface ITask {
   title: string;
   description: string;
-  status: "completed" | "inProgress" | "unfinished" | "waitingForApproval";
+  status: StatusType;
   isImportant: boolean;
-  subtasks: ITask;
-  owner: IUser;
+  subtasks?: ITask;
+  owner?: IUser;
 }
 
 export interface IUser {
@@ -23,4 +29,9 @@ export interface AuthResponse {
 export interface UsersResponse {
   message: string;
   users: IUser[];
+}
+
+export interface TaskRespose {
+  message: string;
+  tasks: ITask[];
 }

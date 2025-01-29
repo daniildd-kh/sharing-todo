@@ -1,0 +1,14 @@
+@mixin size($value: 100%) {
+  width: $value;
+  height: $value;
+}
+
+@mixin center() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin transition($properties, $duration: 0.3s, $timing-function: ease) {
+  transition: $properties $duration $timing-function;
+}

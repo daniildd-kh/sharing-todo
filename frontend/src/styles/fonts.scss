@@ -1,8 +1,11 @@
+// TODO: Подключить обычные шрифты
+// Гайд: https://purpleschool.ru/knowledge-base/article/font-variation
+
 @font-face {
   font-family: "Raleway-Variable";
   src:
-    url("@/assets/fonts/Raleway-Variable.woff") format("woff"),
-    url("@/assets/fonts/Raleway-Variable.woff") format("woff2");
+    url("@/assets/fonts/Raleway-Variable.woff2") format("woff2"),
+    url("@/assets/fonts/Raleway-Variable.woff") format("woff");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;

@@ -3,6 +3,7 @@ import AuthService from "../services/AuthService";
 import { AuthResponse } from "../models";
 import $api from "../http";
 import UsersService from "../services/UsersService";
+import TodoService from "../services/TodoService";
 
 export const fetchLogin = createAsyncThunk(
   "auth/login",
@@ -59,5 +60,14 @@ export const checkAuth = createAsyncThunk("auth/check", async () => {
     return response.data?.user;
   } catch (error) {
     throw new Error(`Ошибка обновления токена ${error}`);
+  }
+});
+
+export const fetchGetUserTasks = createAsyncThunk("tasks/me", async () => {
+  try {
+    const response = await TodoService.getUserTasks();
+    return response.data.tasks;
+  } catch (error) {
+    throw new Error(`Ошибка во время получения задач ${error}`);
   }
 });

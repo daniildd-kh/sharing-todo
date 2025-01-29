@@ -59,12 +59,12 @@ export const addTask = async (
 };
 
 export const getUserTasks = async (
-  req: Request,
+  req: Request & { user?: { id: string } },
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { owner } = req.body;
+    const owner = req.user?.id;
     const user = await UserModel.findById(owner)
       .populate("tasks")
       .orFail(() => {
