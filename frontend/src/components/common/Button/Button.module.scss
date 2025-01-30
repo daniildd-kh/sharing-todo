@@ -2,9 +2,9 @@
 @use "@/styles/mixins.scss" as *;
 
 .button {
+  background-color: transparent;
   font-size: $fontSizeBase;
   font-weight: $fontWeightRegular;
-  background-color: $colorLight;
   border: none;
   padding: 0;
   color: $fontColorDark;

@@ -45,7 +45,7 @@ const TodoPage = () => {
           {tasks.map((task) => (
             <Task
               status={task.status}
-              isWarning={task.isImportant}
+              isImportant={task.isImportant}
               title={task.title}
               description={task.description}
             />

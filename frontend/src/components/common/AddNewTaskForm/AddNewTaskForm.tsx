@@ -1,16 +1,16 @@
-import style from "./AddNewTaskForm.module.scss";
 import { createInput, createInputBase } from "../Input/Input";
 import { ITask } from "../../../models";
 import { Button } from "../Button/Button";
 import { SmallText } from "../Typography/Typography";
 import IconSvg from "../Icons/IconSvg";
 import AccordionWithTrigger from "../Accordion/AccordionWithTrigger";
-import clsx from "clsx";
 import { StatusType } from "../../../models";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { boolean, object, ObjectSchema, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import NewTaskStatuses from "./Statuses";
+import NewTaskStatuses from "../../../containers/TaskSettings/Statuses";
+import TaskSettings from "../../../containers/TaskSettings/TaskSettings";
+import style from "./AddNewTaskForm.module.scss";
 
 interface AddNewTaskFormProps {
   onClose?: () => void;
@@ -70,37 +70,12 @@ const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
           register={register}
           className={style.description}
         />
-
-        <div className={style.setting}>
-          <Button
-            className={clsx(style.button, {
-              [style.exclamation]: isImportant,
-            })}
-            onClick={handleIsImportant}
-            type="button"
-          >
-            <IconSvg name="exclamation" size={13} />
-            <SmallText>Приоритет</SmallText>
-          </Button>
-          <AccordionWithTrigger
-            trigger={
-              <Button
-                className={clsx(style.button, style.trigger)}
-                type="button"
-              >
-                <IconSvg name="tags" size={13} />
-                <SmallText>Статус</SmallText>
-              </Button>
-            }
-          >
-            {
-              <NewTaskStatuses
-                setStatus={handleStatus}
-                currentStatus={currentStatus}
-              />
-            }
-          </AccordionWithTrigger>
-        </div>
+        <TaskSettings
+          isImportant={isImportant}
+          handleIsImportant={handleIsImportant}
+          handleStatus={handleStatus}
+          currentStatus={currentStatus}
+        />
       </div>
       <div className={style.divider}></div>
       <div className={style.bottom}>

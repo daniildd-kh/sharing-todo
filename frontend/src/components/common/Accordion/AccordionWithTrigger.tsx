@@ -45,7 +45,7 @@ const AccordionWithTrigger = ({
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, []);
+  }, [handleOutsideClick]);
 
   return (
     <div className={style.trigger}>

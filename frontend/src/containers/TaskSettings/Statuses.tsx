@@ -1,11 +1,11 @@
-import IconSvg, { IconName } from "../Icons/IconSvg";
-import { Button } from "../Button/Button";
-import { SmallText } from "../Typography/Typography";
-import { StatusType } from "../../../models";
+import IconSvg, { IconName } from "../../components/common/Icons/IconSvg";
+import { Button } from "../../components/common/Button/Button";
+import { SmallText } from "../../components/common/Typography/Typography";
+import { StatusType } from "../../models";
 import clsx from "clsx";
-import style from "./AddNewTaskForm.module.scss";
+import style from "./TaskSettings.module.scss";
 
-interface NewTaskStatusesProps {
+interface TaskStatusesProps {
   setStatus: (status: StatusType) => void;
   currentStatus: StatusType;
 }
@@ -38,10 +38,7 @@ const statuses: IStatus[] = [
   },
 ];
 
-const NewTaskStatuses = ({
-  setStatus,
-  currentStatus,
-}: NewTaskStatusesProps) => {
+const TaskStatuses = ({ setStatus, currentStatus }: TaskStatusesProps) => {
   return (
     <div className={style.statuses}>
       {statuses.map((status, index) => (
@@ -67,4 +64,4 @@ const NewTaskStatuses = ({
   );
 };
 
-export default NewTaskStatuses;
+export default TaskStatuses;

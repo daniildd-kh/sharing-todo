@@ -1,10 +1,14 @@
-import style from "./Task.module.scss";
-import IconSvg, { IconName } from "../Icons/IconSvg";
-import { LargeText } from "../Typography/Typography";
 import clsx from "clsx";
+import { LargeText, SmallText } from "../Typography/Typography";
+import IconSvg, { IconName } from "../Icons/IconSvg";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Textarea from "../Textarea/Textarea";
 import { createInput } from "../Input/Input";
+import AccordionWithTrigger from "../Accordion/AccordionWithTrigger";
+import TaskSettings from "../../../containers/TaskSettings/TaskSettings";
+import { ITask, StatusType } from "../../../models";
+import { Button } from "../Button/Button";
+import style from "./Task.module.scss";
 
 type statusVariant =
   | "unfinished"
@@ -20,7 +24,7 @@ const statusIcon: Record<statusVariant, IconName> = {
 
 interface TaskProps {
   status?: statusVariant;
-  isWarning?: boolean;
+  isImportant?: boolean;
   title?: string;
   description?: string;
 }
@@ -29,23 +33,39 @@ function withTask(defaults: TaskProps) {
   const Input = createInput();
   return function Task({
     status = defaults.status || "unfinished",
-    isWarning = defaults.isWarning || false,
+    isImportant = defaults.isImportant || false,
     title = "No title",
     description = "No description",
   }: TaskProps) {
     const taskRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
     const [isChange, setIsChange] = useState(false);
-    const [taskData, setTaskData] = useState({
+    const [taskData, setTaskData] = useState<ITask>({
       title,
       description,
+      isImportant,
+      status,
     });
+    const originalTaskData = useRef<ITask>({ ...taskData });
+
+    const handleSave = () => {
+      originalTaskData.current = { ...taskData };
+      setIsChange(false);
+      console.log(taskData);
+    };
+
+    const handleCancel = () => {
+      setTaskData({ ...originalTaskData.current });
+      setIsChange(false);
+    };
+
     const toggleOpen = () => {
       setIsOpen(!isOpen);
     };
 
     const toggleChange = () => {
       setIsChange(!isChange);
+      setIsOpen(true);
     };
 
     const changeTask = (
@@ -55,6 +75,22 @@ function withTask(defaults: TaskProps) {
       setTaskData((prevData) => ({
         ...prevData,
         [name]: value,
+      }));
+    };
+
+    const changeTaskisImportant = () => {
+      setIsChange(true);
+      setTaskData((prevData) => ({
+        ...prevData,
+        isImportant: !taskData.isImportant,
+      }));
+    };
+
+    const changeTaskStatus = (status: StatusType) => {
+      setIsChange(true);
+      setTaskData((prevData) => ({
+        ...prevData,
+        status: status,
       }));
     };
 
@@ -100,6 +136,43 @@ function withTask(defaults: TaskProps) {
           <span className={clsx(style.iconStatus, style[status])}>
             <IconSvg name={status ? statusIcon[status] : "close"} size={18} />
           </span>
+          <div
+            className={style.contentMenu}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Button
+              className={clsx(style.pointer, style.icon)}
+              onClick={toggleChange}
+            >
+              {!isChange ? (
+                <IconSvg name={"pencil"} />
+              ) : (
+                <IconSvg name={"checkmark"} />
+              )}
+            </Button>
+            <Button className={clsx(style.pointer, style.trash)}>
+              <IconSvg name={"trash"}></IconSvg>
+            </Button>
+            <AccordionWithTrigger
+              trigger={
+                <Button
+                  className={clsx(style.pointer, style.icon)}
+                  onClick={() => setIsOpen(true)}
+                >
+                  <IconSvg name={"dots"}></IconSvg>
+                </Button>
+              }
+            >
+              {
+                <TaskSettings
+                  handleIsImportant={changeTaskisImportant}
+                  handleStatus={changeTaskStatus}
+                  currentStatus={taskData.status}
+                  isImportant={taskData.isImportant}
+                />
+              }
+            </AccordionWithTrigger>
+          </div>
           {!isChange ? (
             <LargeText
               className={clsx(style.title, style[status])}
@@ -116,12 +189,9 @@ function withTask(defaults: TaskProps) {
               onChange={changeTask}
               onClick={(e) => e.stopPropagation()}
               register={undefined}
-              onBlur={() => {
-                console.log("blur");
-              }}
             />
           )}
-          {isWarning && (
+          {isImportant && (
             <span className={clsx(style.iconStatus, style.exclamation)}>
               <IconSvg name={"exclamation"} />
             </span>
@@ -138,23 +208,24 @@ function withTask(defaults: TaskProps) {
               onChange={changeTask}
             />
           )}
-          <div className={style.contentMenu}>
-            <a
-              className={clsx(style.pointer, style.pencil)}
-              onClick={toggleChange}
-            >
-              {!isChange ? (
-                <IconSvg name={"pencil"} />
-              ) : (
-                <a className={clsx(style.pointer)} onClick={toggleChange}>
-                  <IconSvg name={"checkmark"} />
-                </a>
-              )}
-            </a>
-            <a className={clsx(style.pointer, style.trash)}>
-              <IconSvg name={"trash"}></IconSvg>
-            </a>
-          </div>
+          {isChange && (
+            <div className={style.action}>
+              <Button
+                className={clsx(style.cancel)}
+                onClick={handleCancel}
+                type="button"
+              >
+                <SmallText>Отменить</SmallText>
+              </Button>
+              <Button
+                className={style.buttonChange}
+                onClick={handleSave}
+                type="button"
+              >
+                <SmallText>Сохранить</SmallText>
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     );

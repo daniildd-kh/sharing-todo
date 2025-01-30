@@ -22,7 +22,7 @@ export const Button = ({
 }: ButtonProps) => {
   return (
     <button
-      className={clsx(style.button, className, { [style.disabled]: disabled })}
+      className={clsx(className, style.button, { [style.disabled]: disabled })}
       onClick={disabled ? undefined : onClick}
       {...props}
     >

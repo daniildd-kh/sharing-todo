@@ -21,6 +21,10 @@
     flex-direction: column;
   }
 
+  &:hover .contentMenu {
+    opacity: 1;
+  }
+
   &.unfinished {
     background-color: rgba($colorDark, 0.05);
   }
@@ -43,6 +47,7 @@
   display: flex;
   align-items: center;
   width: 100%;
+  position: relative;
 }
 
 .iconStatus {
@@ -105,9 +110,15 @@
 }
 
 .contentMenu {
+  top: 0;
+  right: 51px;
+  position: absolute;
   display: flex;
-  gap: 5px;
+  gap: 10px;
   align-self: flex-end;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 10;
 }
 
 .pointer {
@@ -123,11 +134,41 @@
   }
 }
 
-.pencil {
+.icon {
   color: rgba($colorDark, 0.8);
   @include transition(color);
 
   &:hover {
     color: $colorDark;
+  }
+}
+
+.action {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 10px;
+}
+
+.buttonChange {
+  padding: 8px 10px;
+  background-color: rgba($colorPrimary, 0.8);
+  color: $colorLight;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $colorPrimary;
+  }
+}
+
+.cancel {
+  background-color: rgba($colorDark, 0.2);
+  color: $fontColorDark;
+  padding: 8px 10px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: rgba($colorDark, 0.3);
   }
 }
