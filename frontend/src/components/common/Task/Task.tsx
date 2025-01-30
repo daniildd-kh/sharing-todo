@@ -98,19 +98,19 @@ function withTask(defaults: TaskProps) {
       >
         <div className={clsx(style.header, style.pointer)} onClick={toggleOpen}>
           <span className={clsx(style.iconStatus, style[status])}>
-            <IconSvg name={status ? statusIcon[status] : "close"} />
+            <IconSvg name={status ? statusIcon[status] : "close"} size={18} />
           </span>
           {!isChange ? (
-            <div
+            <LargeText
+              className={clsx(style.title, style[status])}
               onClick={handleSingleClick}
               onDoubleClick={handleDblClickTitle}
             >
-              <LargeText className={clsx(style.text, style[status])}>
-                {taskData.title}
-              </LargeText>
-            </div>
+              {taskData.title}
+            </LargeText>
           ) : (
             <Input
+              className={style.title}
               value={taskData.title}
               name="title"
               onChange={changeTask}

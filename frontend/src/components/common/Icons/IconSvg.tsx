@@ -56,7 +56,7 @@ const icons: Record<IconName, JSX.Element> = {
         clip-rule="evenodd"
         d="M10.5705 16.2274C6.30281 17.3709 1.91611 14.8383 0.772579 10.5705C-0.370956 6.30282 2.1617 1.91612 6.42943 0.772587C10.6972 -0.370947 15.0839 2.16171 16.2274 6.42944L13.8126 7.07649C13.0264 4.14243 10.0105 2.40122 7.07648 3.1874C4.14242 3.97358 2.40121 6.98943 3.18739 9.9235C3.97357 12.8576 6.98943 14.5988 9.92349 13.8126L10.5705 16.2274Z"
         fill="currentColor"
-        fill-opacity="0.1"
+        fillOpacity="0.1"
       />
     </svg>
   ),
@@ -135,7 +135,7 @@ const icons: Record<IconName, JSX.Element> = {
       height="512"
       fill="currentColor"
     >
-      <g id="_01_align_center" data-name="01 align center">
+      <g>
         <path d="M22,4H17V2a2,2,0,0,0-2-2H9A2,2,0,0,0,7,2V4H2V6H4V21a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V6h2ZM9,2h6V4H9Zm9,19a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V6H18Z" />
         <rect x="9" y="10" width="2" height="8" />
         <rect x="13" y="10" width="2" height="8" />

@@ -15,7 +15,7 @@
   .content {
     overflow: hidden;
     max-height: 0;
-    padding: 0 15px;
+    padding: 0 25px 0 50px;
     transition: all 0.6s linear;
     display: flex;
     flex-direction: column;
@@ -42,11 +42,13 @@
   gap: 15px;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .iconStatus {
-  @include size(35px);
+  @include size(36px);
   @include center();
+  box-sizing: border-box;
   background-color: rgba($colorDark, 0.1);
   border-radius: calc($borderRadius / 2);
 
@@ -71,7 +73,12 @@
   }
 }
 
-.text {
+.title {
+  display: inline-block;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: $fontColorDark;
   font-weight: $fontWeightRegular;
 
@@ -94,7 +101,6 @@
 
 .exclamation {
   color: $colorLight;
-  margin-left: auto;
   background-color: $colorWarning;
 }
 
