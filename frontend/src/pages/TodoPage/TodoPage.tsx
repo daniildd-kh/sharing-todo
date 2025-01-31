@@ -42,14 +42,18 @@ const TodoPage = () => {
       {loading && <p>Loading...</p>}
       {tasks && (
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          {tasks.map((task) => (
-            <Task
-              status={task.status}
-              isImportant={task.isImportant}
-              title={task.title}
-              description={task.description}
-            />
-          ))}
+          {tasks.map((task) => {
+            return (
+              <Task
+                key={task._id}
+                _id={task._id}
+                status={task.status}
+                isImportant={task.isImportant}
+                title={task.title}
+                description={task.description}
+              />
+            );
+          })}
         </div>
       )}
     </div>

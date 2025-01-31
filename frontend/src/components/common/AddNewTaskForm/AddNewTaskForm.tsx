@@ -3,19 +3,23 @@ import { ITask } from "../../../models";
 import { Button } from "../Button/Button";
 import { SmallText } from "../Typography/Typography";
 import IconSvg from "../Icons/IconSvg";
-import AccordionWithTrigger from "../Accordion/AccordionWithTrigger";
 import { StatusType } from "../../../models";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { boolean, object, ObjectSchema, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import NewTaskStatuses from "../../../containers/TaskSettings/Statuses";
 import TaskSettings from "../../../containers/TaskSettings/TaskSettings";
 import style from "./AddNewTaskForm.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../store/store";
+import { fetchAddUserTask } from "../../../store/actions";
+import { useEffect } from "react";
 
 interface AddNewTaskFormProps {
   onClose?: () => void;
 }
-const taskSchema: ObjectSchema<ITask> = object({
+type INewTask = Omit<ITask, "_id">;
+
+const taskSchema: ObjectSchema<INewTask> = object({
   title: string().required(),
   description: string().required(),
   status: string<StatusType>().required(),
@@ -29,8 +33,9 @@ const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
     handleSubmit,
     setValue,
     watch,
-    formState: { isValid },
-  } = useForm<ITask>({
+    reset,
+    formState: { isValid, isSubmitSuccessful },
+  } = useForm<INewTask>({
     mode: "onSubmit",
     defaultValues: {
       title: "",
@@ -43,10 +48,20 @@ const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
 
   const currentStatus = watch("status");
   const isImportant = watch("isImportant");
-  const onSubmit: SubmitHandler<ITask> = (data) => console.log(data);
+  const ownerId = useSelector((state: RootState) => state.auth.user?._id);
+  const dispatch = useDispatch<AppDispatch>();
+  const onSubmit: SubmitHandler<INewTask> = (data) => {
+    if (!ownerId) return;
+    dispatch(fetchAddUserTask({ ...data, owner: ownerId }));
+    if (onClose) onClose();
+  };
 
-  const Input = createInput<ITask>();
-  const InputBase = createInputBase<ITask>();
+  useEffect(() => {
+    reset();
+  }, [isSubmitSuccessful]);
+
+  const Input = createInput<INewTask>();
+  const InputBase = createInputBase<INewTask>();
 
   const handleStatus = (status: StatusType) => {
     setValue("status", status);

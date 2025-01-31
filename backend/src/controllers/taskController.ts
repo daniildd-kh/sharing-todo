@@ -46,11 +46,11 @@ export const addTask = async (
       owner,
     });
     const populateTask = await newTask.populate("owner");
-    await populateTask.save();
+    const createdTask = await populateTask.save();
 
     res.status(201).json({
       message: "success",
-      task: populateTask,
+      task: createdTask,
     });
     return;
   } catch (error) {

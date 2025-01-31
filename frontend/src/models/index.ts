@@ -5,6 +5,7 @@ export type StatusType =
   | "waitingForApproval";
 
 export interface ITask {
+  _id: string;
   title: string;
   description: string;
   status: StatusType;
@@ -13,8 +14,10 @@ export interface ITask {
   owner?: string;
 }
 
+export type ITaskRequest = Partial<ITask>;
+
 export interface IUser {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   tasks: ITask[];
@@ -31,7 +34,12 @@ export interface UsersResponse {
   users: IUser[];
 }
 
-export interface TaskRespose {
+export interface TasksRespose {
   message: string;
   tasks: ITask[];
+}
+
+export interface TaskRespose {
+  message: string;
+  task: ITask;
 }

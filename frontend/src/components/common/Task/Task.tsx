@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { LargeText, SmallText } from "../Typography/Typography";
 import IconSvg, { IconName } from "../Icons/IconSvg";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import Textarea from "../Textarea/Textarea";
 import { createInput } from "../Input/Input";
 import AccordionWithTrigger from "../Accordion/AccordionWithTrigger";
@@ -9,6 +9,12 @@ import TaskSettings from "../../../containers/TaskSettings/TaskSettings";
 import { ITask, StatusType } from "../../../models";
 import { Button } from "../Button/Button";
 import style from "./Task.module.scss";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../store/store";
+import {
+  fetchRemoveUserTask,
+  fetchUpdateUserTask,
+} from "../../../store/actions";
 
 type statusVariant =
   | "unfinished"
@@ -23,6 +29,7 @@ const statusIcon: Record<statusVariant, IconName> = {
 };
 
 interface TaskProps {
+  _id?: string;
   status?: statusVariant;
   isImportant?: boolean;
   title?: string;
@@ -32,6 +39,7 @@ interface TaskProps {
 function withTask(defaults: TaskProps) {
   const Input = createInput();
   return function Task({
+    _id = defaults._id || "",
     status = defaults.status || "unfinished",
     isImportant = defaults.isImportant || false,
     title = "No title",
@@ -41,17 +49,23 @@ function withTask(defaults: TaskProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [isChange, setIsChange] = useState(false);
     const [taskData, setTaskData] = useState<ITask>({
+      _id,
       title,
       description,
       isImportant,
       status,
     });
     const originalTaskData = useRef<ITask>({ ...taskData });
+    const dispatch = useDispatch<AppDispatch>();
 
     const handleSave = () => {
+      dispatch(fetchUpdateUserTask(taskData));
       originalTaskData.current = { ...taskData };
       setIsChange(false);
-      console.log(taskData);
+    };
+
+    const handleRemove = () => {
+      dispatch(fetchRemoveUserTask({ _id: taskData._id }));
     };
 
     const handleCancel = () => {
@@ -68,15 +82,14 @@ function withTask(defaults: TaskProps) {
       setIsOpen(true);
     };
 
-    const changeTask = (
-      e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-      const { name, value } = e.target;
-      setTaskData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    };
+    const changeTask = useCallback(
+      (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setTaskData((prev) => ({ ...prev, [name]: value }));
+        setIsChange(true);
+      },
+      []
+    );
 
     const changeTaskisImportant = () => {
       setIsChange(true);
@@ -129,12 +142,17 @@ function withTask(defaults: TaskProps) {
 
     return (
       <div
-        className={clsx(style.todo, style[status], { [style.open]: isOpen })}
+        className={clsx(style.todo, style[taskData.status], {
+          [style.open]: isOpen,
+        })}
         ref={taskRef}
       >
         <div className={clsx(style.header, style.pointer)} onClick={toggleOpen}>
-          <span className={clsx(style.iconStatus, style[status])}>
-            <IconSvg name={status ? statusIcon[status] : "close"} size={18} />
+          <span className={clsx(style.iconStatus, style[taskData.status])}>
+            <IconSvg
+              name={status ? statusIcon[taskData.status] : "close"}
+              size={18}
+            />
           </span>
           <div
             className={style.contentMenu}
@@ -150,7 +168,10 @@ function withTask(defaults: TaskProps) {
                 <IconSvg name={"checkmark"} />
               )}
             </Button>
-            <Button className={clsx(style.pointer, style.trash)}>
+            <Button
+              className={clsx(style.pointer, style.trash)}
+              onClick={handleRemove}
+            >
               <IconSvg name={"trash"}></IconSvg>
             </Button>
             <AccordionWithTrigger
@@ -175,7 +196,7 @@ function withTask(defaults: TaskProps) {
           </div>
           {!isChange ? (
             <LargeText
-              className={clsx(style.title, style[status])}
+              className={clsx(style.title, style[taskData.status])}
               onClick={handleSingleClick}
               onDoubleClick={handleDblClickTitle}
             >
@@ -191,7 +212,7 @@ function withTask(defaults: TaskProps) {
               register={undefined}
             />
           )}
-          {isImportant && (
+          {taskData.isImportant && (
             <span className={clsx(style.iconStatus, style.exclamation)}>
               <IconSvg name={"exclamation"} />
             </span>

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import AuthService from "../services/AuthService";
-import { AuthResponse } from "../models";
+import { AuthResponse, ITask, ITaskRequest } from "../models";
 import $api from "../http";
 import UsersService from "../services/UsersService";
 import TodoService from "../services/TodoService";
@@ -71,3 +71,39 @@ export const fetchGetUserTasks = createAsyncThunk("tasks/me", async () => {
     throw new Error(`Ошибка во время получения задач ${error}`);
   }
 });
+
+export const fetchUpdateUserTask = createAsyncThunk(
+  "task/me/update",
+  async (credentials: ITaskRequest) => {
+    try {
+      const response = await TodoService.updateUserTask(credentials);
+      return response.data.task;
+    } catch (error) {
+      throw new Error(`Возникла ошибка при обновлении задачи ${error}`);
+    }
+  }
+);
+
+export const fetchRemoveUserTask = createAsyncThunk(
+  "task/me/remove",
+  async (credentials: { _id: string }) => {
+    try {
+      const response = await TodoService.removeUserTask(credentials);
+      return response.data.task._id;
+    } catch (error) {
+      throw new Error(`Возникла ошибка при удалении задачи ${error}`);
+    }
+  }
+);
+
+export const fetchAddUserTask = createAsyncThunk(
+  "task/me/add",
+  async (credentials: ITaskRequest) => {
+    try {
+      const response = await TodoService.addUserTask(credentials);
+      return response.data.task;
+    } catch (error) {
+      throw new Error(`Возникла ошибка при создании задачи ${error}`);
+    }
+  }
+);
