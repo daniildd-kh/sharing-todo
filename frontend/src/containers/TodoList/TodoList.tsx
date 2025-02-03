@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, Dispatch } from "react";
+import React, { ReactNode, useState, Dispatch, useEffect } from "react";
 import {
   DndContext,
   closestCenter,
@@ -26,6 +26,11 @@ interface TodoListProps {
 
 const TodoList = ({ tasksList }: TodoListProps) => {
   const [tasks, setTasks] = useState(tasksList);
+
+  useEffect(() => {
+    setTasks(tasksList);
+  }, [tasksList]);
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
