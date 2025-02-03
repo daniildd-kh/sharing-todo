@@ -5,7 +5,7 @@ import { SmallText } from "../Typography/Typography";
 import IconSvg from "../Icons/IconSvg";
 import { StatusType } from "../../../models";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { boolean, object, ObjectSchema, string } from "yup";
+import { boolean, number, object, ObjectSchema, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TaskSettings from "../../../containers/TaskSettings/TaskSettings";
 import style from "./AddNewTaskForm.module.scss";
@@ -25,6 +25,7 @@ const taskSchema: ObjectSchema<INewTask> = object({
   status: string<StatusType>().required(),
   isImportant: boolean().required(),
   owner: string().optional(),
+  order: number().required(),
 });
 
 const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
@@ -42,6 +43,7 @@ const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
       description: "",
       status: "unfinished",
       isImportant: false,
+      order: 0,
     },
     resolver: yupResolver(taskSchema),
   });

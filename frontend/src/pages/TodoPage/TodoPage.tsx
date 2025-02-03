@@ -9,6 +9,8 @@ import IconSvg from "../../components/common/Icons/IconSvg";
 import style from "./TodoPage.module.scss";
 import AddNewTaskForm from "../../components/common/AddNewTaskForm/AddNewTaskForm";
 import { Button } from "../../components/common/Button/Button";
+import TodoList from "../../containers/TodoList/TodoList";
+import { ITask } from "../../models";
 
 const TodoPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,8 +22,15 @@ const TodoPage = () => {
 
   useEffect(() => {
     dispatch(fetchGetUserTasks());
-    console.log(tasks);
   }, [dispatch]);
+
+  const compareTask = (task1: ITask, task2: ITask) => {
+    return task1.order - task2.order;
+  };
+
+  const sortTasks = (tasks: ITask[]) => {
+    return [...tasks].sort(compareTask);
+  };
   return (
     <div>
       <span className={style.title}>
@@ -42,18 +51,7 @@ const TodoPage = () => {
       {loading && <p>Loading...</p>}
       {tasks && (
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          {tasks.map((task) => {
-            return (
-              <Task
-                key={task._id}
-                _id={task._id}
-                status={task.status}
-                isImportant={task.isImportant}
-                title={task.title}
-                description={task.description}
-              />
-            );
-          })}
+          <TodoList tasksList={sortTasks(tasks)} />
         </div>
       )}
     </div>

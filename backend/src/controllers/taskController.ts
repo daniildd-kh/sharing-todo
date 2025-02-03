@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { TaskModel } from "../models/Task";
+import { ITask, TaskModel } from "../models/Task";
 import { UserModel } from "../models/User";
 import { NotFoundError } from "../errors/not-found-error";
 
@@ -9,7 +9,7 @@ export const getAllTasks = async (
   next: NextFunction
 ) => {
   try {
-    const tasks = await TaskModel.find({}).populate("owner");
+    const tasks = await TaskModel.find({}).sort({ order: 1 }).populate("owner");
     if (!tasks) {
       res.status(404).json({ message: "Задачи не были найдены" });
       return;
@@ -23,26 +23,52 @@ export const getAllTasks = async (
   }
 };
 
+export const reorderedTasks = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const reorderedTasks = req.body;
+    const updatedPromises = reorderedTasks.map(
+      async (task: ITask, index: number) => {
+        return await TaskModel.findByIdAndUpdate(
+          task._id,
+          { order: index },
+          { new: true }
+        );
+      }
+    );
+    await Promise.all(updatedPromises);
+    res.status(200).json({
+      message: "success",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 export const addTask = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { title, description, status, isImportant, owner } = req.body;
-
-    console.log("Полученные данные:", req.body);
+    const { title, description, status, isImportant, owner, order } = req.body;
 
     const isUserExist = await UserModel.exists({ _id: owner });
     if (!isUserExist) {
       throw new NotFoundError("Пользователь с указанным ID не существует");
     }
+    const lastIndex = await TaskModel.findOne().sort({ order: -1 });
+    const newOrder = lastIndex ? lastIndex.order + 1 : 0;
 
     const newTask = new TaskModel({
       title,
       description,
       status,
       isImportant,
+      order: newOrder,
       owner,
     });
     const populateTask = await newTask.populate("owner");

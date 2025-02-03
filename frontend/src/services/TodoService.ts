@@ -1,6 +1,12 @@
 import { AxiosResponse } from "axios";
 import $api from "../http";
-import { TasksRespose, TaskRespose, ITaskRequest } from "../models";
+import {
+  TasksRespose,
+  TaskRespose,
+  ITaskRequest,
+  ResposeWithMessage,
+  ITask,
+} from "../models";
 
 export default class TodoService {
   static async getUserTasks(): Promise<AxiosResponse<TasksRespose>> {
@@ -23,5 +29,14 @@ export default class TodoService {
     credentials: ITaskRequest
   ): Promise<AxiosResponse<TaskRespose>> {
     return await $api.post<TaskRespose>("/api/tasks/", credentials);
+  }
+
+  static async reorderTasks(
+    credentials: ITask[]
+  ): Promise<AxiosResponse<ResposeWithMessage>> {
+    return await $api.put<ResposeWithMessage>(
+      "/api/tasks/reorder",
+      credentials
+    );
   }
 }

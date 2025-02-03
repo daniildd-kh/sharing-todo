@@ -1,0 +1,11 @@
+.sortableTask {
+  position: relative;
+}
+
+.handle {
+  top: 15px;
+  left: 10px;
+  position: absolute;
+  cursor: grab;
+  font-size: 24px;
+}

@@ -12,6 +12,9 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@dnd-kit/modifiers": "^9.0.0",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@hookform/resolvers": "^3.10.0",
     "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.9",

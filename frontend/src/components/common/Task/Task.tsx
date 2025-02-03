@@ -28,6 +28,8 @@ const statusIcon: Record<statusVariant, IconName> = {
   waitingForApproval: "checkmark",
 };
 
+type ITaskCard = Omit<ITask, "order">;
+
 interface TaskProps {
   _id?: string;
   status?: statusVariant;
@@ -48,14 +50,14 @@ function withTask(defaults: TaskProps) {
     const taskRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
     const [isChange, setIsChange] = useState(false);
-    const [taskData, setTaskData] = useState<ITask>({
+    const [taskData, setTaskData] = useState<ITaskCard>({
       _id,
       title,
       description,
       isImportant,
       status,
     });
-    const originalTaskData = useRef<ITask>({ ...taskData });
+    const originalTaskData = useRef<ITaskCard>({ ...taskData });
     const dispatch = useDispatch<AppDispatch>();
 
     const handleSave = () => {

@@ -7,6 +7,7 @@ export interface ITask extends Document {
   description?: string;
   status: "completed" | "inProgress" | "unfinished" | "waitingForApproval";
   isImportant: boolean;
+  order: number;
   subtasks: Types.ObjectId | null;
   owner: Types.ObjectId;
 }
@@ -30,6 +31,7 @@ const TaskSchema = new Schema<ITask>(
       default: "unfinished",
     },
     isImportant: { type: Boolean, default: false },
+    order: { type: Number, required: true },
     subtasks: {
       type: Types.ObjectId,
       ref: "Task",

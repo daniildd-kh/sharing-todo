@@ -4,6 +4,7 @@ import {
   getAllTasks,
   getUserTasks,
   removeTask,
+  reorderedTasks,
   updateTask,
 } from "../controllers/taskController";
 import auth from "../middlewares/auth";
@@ -11,6 +12,7 @@ import auth from "../middlewares/auth";
 const tasksRouter = Router();
 
 tasksRouter.get("/", getAllTasks);
+tasksRouter.put("/reorder", reorderedTasks);
 tasksRouter.get("/me", auth, getUserTasks);
 tasksRouter.post("/", addTask);
 tasksRouter.delete("/:id", removeTask);

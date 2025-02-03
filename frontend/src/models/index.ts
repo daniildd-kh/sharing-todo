@@ -10,6 +10,7 @@ export interface ITask {
   description: string;
   status: StatusType;
   isImportant: boolean;
+  order: number;
   // subtasks?: ITask;
   owner?: string;
 }
@@ -43,3 +44,7 @@ export interface TaskRespose {
   message: string;
   task: ITask;
 }
+
+export type ResposeWithMessage = {
+  message: string;
+};
