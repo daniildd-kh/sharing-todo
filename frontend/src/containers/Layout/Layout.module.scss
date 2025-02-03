@@ -3,11 +3,12 @@
 .layout {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100%;
 }
 
 .main {
   flex-grow: 1;
+  min-height: 100vh;
   margin: 20px auto;
   width: 80vw;
   background-color: $backgroundColor;

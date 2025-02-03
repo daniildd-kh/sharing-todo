@@ -1,0 +1,28 @@
+@use "@/styles/variables.scss" as *;
+
+.footer {
+  margin-top: 60px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: $colorDark;
+  color: $colorLight;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  box-sizing: border-box;
+  min-height: 100px;
+  width: 100%;
+  padding: 10px clamp(20px, 5vw, 80px);
+}
+
+.verticalDivider {
+  align-self: stretch;
+  width: 1px;
+  background-color: rgba($colorLight, 0.8);
+}
+
+.menu {
+  justify-content: flex-start;
+  display: flex;
+  flex-grow: 1;
+  color: $colorLight;
+}

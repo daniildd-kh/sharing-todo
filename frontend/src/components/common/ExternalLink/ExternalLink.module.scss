@@ -1,0 +1,14 @@
+@use "@/styles/variables.scss" as *;
+
+.link {
+  position: relative;
+  display: inline-block;
+  color: $colorLight;
+  text-decoration: none;
+}
+
+.external {
+  position: absolute;
+  top: 0;
+  right: -15px;
+}

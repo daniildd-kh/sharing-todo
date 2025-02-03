@@ -1,6 +1,7 @@
 import React from "react";
 import style from "./Menu.module.scss";
 import { Link } from "react-router";
+import clsx from "clsx";
 
 type LinkType = {
   text: string;
@@ -9,11 +10,12 @@ type LinkType = {
 
 interface MenuProps {
   links: LinkType[];
+  className?: string;
 }
 
-const Menu = ({ links }: MenuProps) => {
+const Menu = ({ links, className }: MenuProps) => {
   return (
-    <ul className={style.menu}>
+    <ul className={clsx(style.menu, className)}>
       {links &&
         links.map((link, index) => (
           <li key={index} className={style.menuItem}>
