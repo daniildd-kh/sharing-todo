@@ -1,0 +1,67 @@
+@use "@/styles/mixins.scss" as *;
+@use "@/styles/variables.scss" as *;
+
+.container {
+  @include center();
+  min-height: 100vh;
+  background-image: linear-gradient(
+    120deg,
+    $colorPrimary 0%,
+    $colorSecondary 100%
+  );
+}
+
+.form {
+  margin-inline: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 60px;
+  max-width: 800px;
+  max-height: 600px;
+  background-color: $colorLight;
+  gap: 30px;
+  border-radius: 10px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  width: 100%;
+  gap: 20px;
+}
+.input {
+  border: 1px solid rgba($colorDark, 0.8) !important;
+  width: 100%;
+  padding: 5px !important;
+  border-radius: 10px;
+}
+
+.options {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  text-transform: uppercase;
+  max-width: 200px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid rgba($colorDark, 0.8) !important;
+  padding: 10px 20px !important;
+  justify-content: center !important;
+  color: $colorLight !important;
+  background-color: rgba($colorSecondary, 1) !important;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: rgba($colorSecondary, 0.9) !important;
+  }
+}
+
+.checkbox {
+  display: flex;
+}
