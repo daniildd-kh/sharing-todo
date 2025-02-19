@@ -1,13 +1,25 @@
 import React from "react";
 import style from "./Logo.module.scss";
 import IconSvg from "../Icons/IconSvg";
-import { LargeText, Text } from "../Typography/Typography";
+import { Text } from "../Typography/Typography";
+import { Link } from "react-router";
 
-export const Logo = () => {
+interface LogoProps {
+  logoSize?: number;
+}
+
+export const Logo = ({ logoSize }: LogoProps) => {
   return (
-    <div className={style.logo}>
-      <IconSvg name="todo" size={24} />
-    </div>
+    <Link
+      className={style.logo}
+      to="/"
+      style={{
+        width: logoSize ? logoSize * 2 : 40,
+        height: logoSize ? logoSize * 2 : 40,
+      }}
+    >
+      <IconSvg name="todo" size={logoSize ? logoSize : 24} />
+    </Link>
   );
 };
 

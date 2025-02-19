@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from "react";
+import React, { ReactNode } from "react";
 import style from "./Button.module.scss";
 import clsx from "clsx";
 import IconSvg, { IconName } from "../Icons/IconSvg";

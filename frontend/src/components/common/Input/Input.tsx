@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactHTMLElement } from "react";
+import React, { ChangeEvent } from "react";
 import clsx from "clsx";
 import style from "./Input.module.scss";
 import { FieldValues, Path, UseFormRegister } from "react-hook-form";
@@ -37,7 +37,7 @@ function withInput<T extends FieldValues>(defaults: Partial<InputProps<T>>) {
         value={value}
         {...(register ? register(name) : {})}
         onClick={onClick}
-        className={clsx(style[styleType], style.input, className)}
+        className={clsx(style.input, style[styleType], className)}
         placeholder={placeholder}
         onChange={onChange}
         type={inputType}
@@ -51,3 +51,7 @@ function withInput<T extends FieldValues>(defaults: Partial<InputProps<T>>) {
 export const createInput = <T extends FieldValues>() => withInput<T>({});
 export const createInputBase = <T extends FieldValues>() =>
   withInput<T>({ styleType: "baseText" });
+export const createInputEmail = <T extends FieldValues>() =>
+  withInput<T>({ styleType: "baseText", inputType: "email" });
+export const createInputPassword = <T extends FieldValues>() =>
+  withInput<T>({ styleType: "baseText", inputType: "password" });
