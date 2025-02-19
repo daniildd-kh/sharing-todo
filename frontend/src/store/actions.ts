@@ -1,20 +1,28 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import AuthService from "../services/AuthService";
-import { AuthResponse, ITask, ITaskRequest } from "../models";
+import { AuthResponse, ITaskRequest } from "../models";
 import $api from "../http";
 import UsersService from "../services/UsersService";
 import TodoService from "../services/TodoService";
+import axios from "axios";
 
 export const fetchLogin = createAsyncThunk(
   "auth/login",
-  async (credentials: { email: string; password: string }) => {
+  async (
+    credentials: { email: string; password: string },
+    { rejectWithValue }
+  ) => {
     try {
       const response = await AuthService.login(credentials);
       const { accessToken } = response.data;
       localStorage.setItem("accessToken", accessToken);
       return response.data?.user;
     } catch (error) {
-      throw new Error(`Ошибка входа в систему ${error}`);
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(
+          error.response?.data.message || "Ошибка авторизации"
+        );
+      }
     }
   }
 );

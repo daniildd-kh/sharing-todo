@@ -40,12 +40,12 @@ const authSlice = createSlice({
       .addCase(fetchLogin.pending, handlePending)
       .addCase(fetchLogin.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.user = action.payload ?? null;
         state.isAuthChecked = true;
       })
       .addCase(fetchLogin.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || "Ошибка входа";
+        state.error = action.payload as string;
       })
 
       .addCase(fetchRegistration.pending, handlePending)
