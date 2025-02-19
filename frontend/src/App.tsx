@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router";
+import { Route, Routes } from "react-router";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
@@ -39,15 +39,14 @@ function App() {
         <Route element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="/" element={<HomePage />} />
-
-          <Route element={<UnAuthLayout />}>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/registration" element={<RegistrationPage />} />
-          </Route>
           <Route element={<AuthLayout />}>
             <Route path="/users" element={<UsersPage />} />
             <Route path="/todo" element={<TodoPage />} />
           </Route>
+        </Route>
+        <Route element={<UnAuthLayout />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/registration" element={<RegistrationPage />} />
         </Route>
       </Routes>
     </>
