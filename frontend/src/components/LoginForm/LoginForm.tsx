@@ -7,9 +7,10 @@ import { object, ObjectSchema, string } from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createInputEmail, createInputPassword } from "../common/Input/Input";
-import { Text, Title } from "../common/Typography/Typography";
+import { SmallText, Text, Title } from "../common/Typography/Typography";
 import { Button } from "../common/Button/Button";
 import { useRef } from "react";
+import { Logo } from "../common/Logo/Logo";
 
 interface ILogin {
   email: string;
@@ -17,12 +18,18 @@ interface ILogin {
 }
 
 const loginSchema: ObjectSchema<ILogin> = object({
-  email: string().email().required(),
-  password: string().min(6).required(),
+  email: string().email("Невалидный формат почты").required("Введите почту"),
+  password: string()
+    .min(6, "Длина пароля минимум 6 символов")
+    .required("Введите пароль"),
 });
 
 const LoginForm = () => {
-  const { register, handleSubmit } = useForm<ILogin>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ILogin>({
     resolver: yupResolver(loginSchema),
   });
 
@@ -36,8 +43,7 @@ const LoginForm = () => {
   const onSubmit: SubmitHandler<ILogin> = (data) => {
     dispatch(fetchLogin({ ...data }))
       .unwrap()
-      .then(() => navigate(from, { replace: true }))
-      .catch((error) => console.error("Ошибка авторизации:", error));
+      .then(() => navigate(from, { replace: true }));
   };
   const inputRef = useRef<HTMLDivElement>(null);
 
@@ -59,7 +65,14 @@ const LoginForm = () => {
 
   return (
     <div className={styles.container}>
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+      <div className={styles.logo}>
+        <Logo logoSize={36} />
+      </div>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={styles.form}
+        noValidate
+      >
         <div className={styles.header}>
           {" "}
           <Title>Вход</Title>
@@ -76,6 +89,11 @@ const LoginForm = () => {
               name="email"
               className={styles.input}
             />
+            {errors.email && (
+              <SmallText className={styles.error}>
+                {errors.email.message}
+              </SmallText>
+            )}
           </div>
           <div>
             <div ref={inputRef}>
@@ -86,13 +104,18 @@ const LoginForm = () => {
                 name="password"
                 className={styles.input}
               />
+              {errors.password && (
+                <SmallText className={styles.error}>
+                  {errors.password.message}
+                </SmallText>
+              )}
             </div>
             <div className={styles.checkbox}>
               <input type="checkbox" onClick={showPassword} />{" "}
               <Text>Показать пароль</Text>
             </div>
           </div>
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <SmallText style={{ color: "red" }}>{error}</SmallText>}
         </div>
         <div className={styles.options}>
           <Button type="submit" disabled={loading} className={styles.button}>
