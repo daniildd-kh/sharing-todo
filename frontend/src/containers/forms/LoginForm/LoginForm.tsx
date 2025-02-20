@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../../store/store";
 import { fetchLogin } from "../../../store/actions";
 import { Link, useLocation, useNavigate } from "react-router";
-import styles from "./LoginFrom.module.scss";
 import commonStyles from "../forms.module.scss";
 import { object, ObjectSchema, string } from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -20,6 +19,7 @@ import { Button } from "../../../components/common/Button/Button";
 import { useRef } from "react";
 import { Logo } from "../../../components/common/Logo/Logo";
 import InputForm from "../components/InputForm";
+import Spinner from "../../../components/common/Loader/Spinner";
 
 interface ILogin {
   email: string;
@@ -42,7 +42,9 @@ const LoginForm = () => {
     resolver: yupResolver(loginSchema),
   });
 
-  const { loading, error } = useSelector((state: RootState) => state.auth);
+  const { loading, error: errorStore } = useSelector(
+    (state: RootState) => state.auth
+  );
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
   const navigate = useNavigate();
@@ -90,7 +92,7 @@ const LoginForm = () => {
             <Link to="/registration">зарегистрироваться</Link>
           </Text>
         </div>
-        <div className={styles.inputs}>
+        <div className={commonStyles.inputs}>
           <InputForm error={errors.email} text={"Почта"}>
             <InputEmail
               register={register}
@@ -107,22 +109,18 @@ const LoginForm = () => {
             />
           </InputForm>
           <div>
-            <div className={styles.checkbox}>
+            <div className={commonStyles.checkbox}>
               <input type="checkbox" onClick={showPassword} />{" "}
               <Text>Показать пароль</Text>
             </div>
           </div>
-          {error && (
-            <SmallText className={commonStyles.error}>{error}</SmallText>
+          {errorStore && (
+            <SmallText className={commonStyles.error}>{errorStore}</SmallText>
           )}
         </div>
-        <div className={styles.options}>
-          <Button
-            type="submit"
-            disabled={loading}
-            className={commonStyles.button}
-          >
-            Войти
+        <div className={commonStyles.options}>
+          <Button type="submit" className={commonStyles.button}>
+            {loading ? <Spinner /> : "Войти"}
           </Button>
         </div>
       </form>

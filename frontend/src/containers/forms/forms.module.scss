@@ -25,10 +25,17 @@
   flex-direction: column;
   padding: 60px;
   max-width: 800px;
-  max-height: 600px;
   background-color: $colorLight;
   gap: 30px;
   border-radius: 10px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  width: 100%;
+  gap: 20px;
 }
 
 .input {
@@ -40,7 +47,7 @@
 
 .button {
   text-transform: uppercase;
-  max-width: 200px;
+  max-width: 300px;
   width: 100%;
   text-align: center;
   border: 1px solid rgba($colorDark, 0.8) !important;
@@ -52,6 +59,24 @@
 
   &:hover {
     background-color: rgba($colorSecondary, 0.9) !important;
+  }
+}
+
+.options {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+
+  input[type="checkbox"] {
+    accent-color: $colorPrimary;
+    width: 16px;
+    height: 16px;
   }
 }
 

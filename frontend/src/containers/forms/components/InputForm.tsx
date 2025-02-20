@@ -10,7 +10,7 @@ interface InputFormProps {
   text: string;
   error: FieldError | undefined;
   children: ReactNode;
-  ref?: RefObject<HTMLDivElement>;
+  ref?: RefObject<HTMLDivElement | null>;
 }
 
 const InputForm = ({ text, children, error, ref }: InputFormProps) => {

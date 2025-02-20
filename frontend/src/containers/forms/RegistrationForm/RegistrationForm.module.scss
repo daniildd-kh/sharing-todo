@@ -1,0 +1,23 @@
+@use "@/styles/variables.scss" as *;
+
+.regContainer {
+  background-image: linear-gradient(
+    to top,
+    $colorPrimary 0%,
+    $colorSecondary 100%
+  );
+}
+
+.regForm {
+  width: 100%;
+}
+
+.regInputs {
+  max-width: 450px;
+}
+
+input[type="checkbox"] {
+  accent-color: $colorPrimary;
+  width: 16px;
+  height: 16px;
+}
