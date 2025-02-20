@@ -31,25 +31,11 @@
   border-radius: 10px;
 }
 
-.inputs {
-  display: flex;
-  flex-direction: column;
-  max-width: 400px;
-  width: 100%;
-  gap: 20px;
-}
 .input {
   border: 1px solid rgba($colorDark, 0.8) !important;
   width: 100%;
   padding: 5px !important;
   border-radius: 10px;
-}
-
-.options {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .button {
@@ -67,17 +53,6 @@
   &:hover {
     background-color: rgba($colorSecondary, 0.9) !important;
   }
-}
-
-.checkbox {
-  display: flex;
-  align-items: center;
-}
-
-input[type="checkbox"] {
-  accent-color: $colorPrimary;
-  width: 16px;
-  height: 16px;
 }
 
 .error {

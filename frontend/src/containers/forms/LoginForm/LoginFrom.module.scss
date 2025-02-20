@@ -1,0 +1,28 @@
+@use "@/styles/mixins.scss" as *;
+@use "@/styles/variables.scss" as *;
+
+.options {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  width: 100%;
+  gap: 20px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  accent-color: $colorPrimary;
+  width: 16px;
+  height: 16px;
+}
