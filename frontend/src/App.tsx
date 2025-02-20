@@ -15,7 +15,7 @@ import { authChecked } from "./store/authSlices";
 import Layout from "./containers/Layout/Layout";
 
 function App() {
-  const { user, loading } = useSelector((state: RootState) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -28,10 +28,6 @@ function App() {
       }
     }
   }, [dispatch, user]);
-
-  if (loading) {
-    return <p> Загрузка...</p>;
-  }
 
   return (
     <>

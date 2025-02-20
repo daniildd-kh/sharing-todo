@@ -29,14 +29,21 @@ export const fetchLogin = createAsyncThunk(
 
 export const fetchRegistration = createAsyncThunk(
   "auth/register",
-  async (credentials: { name: string; email: string; password: string }) => {
+  async (
+    credentials: { name: string; email: string; password: string },
+    { rejectWithValue }
+  ) => {
     try {
       const response = await AuthService.registration(credentials);
       const { accessToken } = response.data;
       localStorage.setItem("accessToken", accessToken);
       return response.data?.user;
     } catch (error) {
-      throw new Error(`Ошибка регистрации ${error}`);
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(
+          error.response?.data.message || "Ошибка регистрации"
+        );
+      }
     }
   }
 );

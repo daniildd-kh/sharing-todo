@@ -51,12 +51,12 @@ const authSlice = createSlice({
       .addCase(fetchRegistration.pending, handlePending)
       .addCase(fetchRegistration.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.user = action.payload ?? null;
         state.isAuthChecked = true;
       })
       .addCase(fetchRegistration.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || "Ошибка регистрации";
+        state.error = action.payload as string;
       })
 
       .addCase(fetchLogout.fulfilled, (state) => {
