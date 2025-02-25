@@ -6,6 +6,11 @@
   list-style: none;
 }
 
+.vertical {
+  flex-direction: column;
+  gap: 5px;
+}
+
 .menuItem {
   flex-grow: 1;
 }
@@ -15,4 +20,8 @@
   font-size: $fontSizeBase;
   font-weight: $fontWeightRegular;
   text-decoration: none;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
 }

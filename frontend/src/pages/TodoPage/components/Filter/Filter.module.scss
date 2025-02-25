@@ -1,0 +1,19 @@
+@use "@/styles/variables.scss" as *;
+
+.filter {
+  background-color: rgba($colorAccent, 0.8);
+
+  &:hover {
+    background-color: $colorAccent;
+  }
+}
+
+.filterMenu {
+  min-width: 160px;
+}
+
+.filterItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

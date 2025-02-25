@@ -38,6 +38,7 @@ function App() {
           <Route element={<AuthLayout />}>
             <Route path="/users" element={<UsersPage />} />
             <Route path="/todo" element={<TodoPage />} />
+            <Route path="/logout" element={<LoginPage />} />
           </Route>
         </Route>
         <Route element={<UnAuthLayout />}>

@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, JSX } from "react";
 import style from "./IconSvg.module.scss";
 import clsx from "clsx";
 
@@ -15,7 +15,8 @@ export type IconName =
   | "inbox"
   | "tags"
   | "dots"
-  | "externalLink";
+  | "externalLink"
+  | "filter";
 
 interface IconSVGProps extends HTMLAttributes<HTMLSpanElement> {
   name: IconName;
@@ -186,15 +187,13 @@ const icons: Record<IconName, JSX.Element> = {
     </svg>
   ),
   externalLink: (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      id="Layer_1"
-      data-name="Layer 1"
-      viewBox="0 0 24 24"
-      width="512"
-      height="512"
-    >
+    <svg viewBox="0 0 24 24" width="512" height="512">
       <path d="M24,2V10h-2V3.414l-12.793,12.793-1.414-1.414L20.586,2h-6.586V0h8c1.103,0,2,.897,2,2Zm-6,20H2V7c0-.551,.449-1,1-1H13.757l2-2H3c-1.654,0-3,1.346-3,3V24H20V8.243l-2,2v11.757Z" />
+    </svg>
+  ),
+  filter: (
+    <svg height="512" viewBox="0 0 24 24" width="512">
+      <path d="m14 24a1 1 0 0 1 -.6-.2l-4-3a1 1 0 0 1 -.4-.8v-5.62l-7.016-7.893a3.9 3.9 0 0 1 2.916-6.487h14.2a3.9 3.9 0 0 1 2.913 6.488l-7.013 7.892v8.62a1 1 0 0 1 -1 1zm-3-4.5 2 1.5v-7a1 1 0 0 1 .253-.664l7.268-8.177a1.9 1.9 0 0 0 -1.421-3.159h-14.2a1.9 1.9 0 0 0 -1.421 3.158l7.269 8.178a1 1 0 0 1 .252.664z" />
     </svg>
   ),
 };

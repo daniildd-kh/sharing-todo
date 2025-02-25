@@ -7,7 +7,7 @@ import style from "./TaskSettings.module.scss";
 
 interface TaskStatusesProps {
   setStatus: (status: StatusType) => void;
-  currentStatus: StatusType;
+  currentStatus?: StatusType;
 }
 interface IStatus {
   label: string;
@@ -55,7 +55,7 @@ const TaskStatuses = ({ setStatus, currentStatus }: TaskStatusesProps) => {
             <IconSvg name={status.icon} size={13} />
             <SmallText>{status.label}</SmallText>
           </Button>
-          {currentStatus === status.value && (
+          {currentStatus && currentStatus === status.value && (
             <IconSvg name="checkmark" size={13} color="#f075aa" />
           )}
         </div>
