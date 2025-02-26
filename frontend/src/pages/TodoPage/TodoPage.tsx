@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   LargeText,
   Text,
@@ -16,6 +16,7 @@ import TodoList from "../../containers/TodoList/TodoList";
 import { ITask, StatusType } from "../../models";
 import Spinner from "../../components/common/Loader/Spinner";
 import Filter from "./components/Filter/Filter";
+import Search from "./components/Search/Search";
 
 const TodoPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,6 +28,7 @@ const TodoPage = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [tasks, setTasks] = useState<ITask[]>([]);
+  const originTasks = useRef<ITask[]>([]);
 
   useEffect(() => {
     dispatch(fetchGetUserTasks());
@@ -34,7 +36,9 @@ const TodoPage = () => {
 
   useEffect(() => {
     if (reduxTasks) {
-      setTasks([...reduxTasks].sort((a, b) => a.order - b.order));
+      const sortedTasks = [...reduxTasks].sort((a, b) => a.order - b.order);
+      setTasks(sortedTasks);
+      originTasks.current = sortedTasks;
     }
   }, [reduxTasks]);
 
@@ -68,6 +72,17 @@ const TodoPage = () => {
     }
   }, [sortStatus]);
 
+  const handleSearch = (query: string) => {
+    console.log(originTasks);
+    setTasks(
+      [...originTasks.current].filter(
+        (task) =>
+          task.description.toLowerCase().includes(query) ||
+          task.title.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div>
       <span className={style.title}>
@@ -85,6 +100,7 @@ const TodoPage = () => {
           sortStatus={sortStatus}
           sortByPriority={sortByPriority}
         />
+        <Search onSearch={handleSearch} />
       </div>
 
       {loading && (

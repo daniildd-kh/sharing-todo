@@ -1,0 +1,18 @@
+@use "@/styles/variables.scss" as *;
+
+.input {
+  box-sizing: border-box;
+  height: 40px;
+  max-width: 400px;
+  width: 100%;
+  color: rgba($fontColorDark, 0.8);
+  border: 1px solid $colorSecondary;
+  outline: none;
+  font-size: $fontSizeBase;
+  font-weight: $fontWeightRegular;
+  line-height: 1.5;
+  margin: 0;
+  padding: 8px 10px;
+  background-color: $colorLight;
+  border-radius: calc($borderRadius / 2);
+}
