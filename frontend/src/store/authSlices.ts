@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   checkAuth,
   fetchLogin,
@@ -7,11 +7,14 @@ import {
 } from "./actions";
 import { IUser } from "../models";
 
+type TStatus = "offline" | "online";
+
 interface AuthState {
   isAuthChecked: boolean;
   loading: boolean;
   user: IUser | null;
   error: string | null;
+  status: TStatus;
 }
 
 const initialState: AuthState = {
@@ -19,6 +22,7 @@ const initialState: AuthState = {
   loading: false,
   user: null,
   error: null,
+  status: "offline",
 };
 
 const handlePending = (state: AuthState) => {
@@ -33,6 +37,9 @@ const authSlice = createSlice({
     authChecked: (state) => {
       state.user = null;
       state.isAuthChecked = true;
+    },
+    setStatus: (state, action: PayloadAction<TStatus>) => {
+      state.status = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -79,6 +86,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { authChecked } = authSlice.actions;
+export const { authChecked, setStatus } = authSlice.actions;
 
 export default authSlice.reducer;

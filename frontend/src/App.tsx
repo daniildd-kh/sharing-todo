@@ -13,6 +13,7 @@ import { RootState } from "./store/store";
 import TodoPage from "./pages/TodoPage/TodoPage";
 import { authChecked } from "./store/authSlices";
 import Layout from "./containers/Layout/Layout";
+import { WebSocketProvider } from "./context/WsContext";
 
 function App() {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -30,7 +31,7 @@ function App() {
   }, [dispatch, user]);
 
   return (
-    <>
+    <WebSocketProvider>
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<HomePage />} />
@@ -46,7 +47,7 @@ function App() {
           <Route path="/registration" element={<RegistrationPage />} />
         </Route>
       </Routes>
-    </>
+    </WebSocketProvider>
   );
 }
 

@@ -6,9 +6,7 @@ import mongoose from "mongoose";
 import router from "./routers";
 import cookieParser from "cookie-parser";
 import errorHandler from "./middlewares/errorHandler";
-
-import WebSocket, { RawData } from "ws";
-import { createClient } from "redis";
+import { initSocket } from "./websocket/server";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -36,6 +34,8 @@ app.use(errorHandler);
 const server = app.listen(PORT, () => {
   console.log(`[server]: Server is running at http://localhost:${PORT}`);
 });
+
+initSocket(server);
 
 // const wss = new WebSocket.Server({ server });
 // const redisClient = createClient();

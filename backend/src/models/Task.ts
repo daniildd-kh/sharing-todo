@@ -4,6 +4,7 @@ import { UserModel } from "./User";
 export interface ITask extends Document {
   _id: Types.ObjectId;
   title: string;
+  common: boolean;
   description?: string;
   status: "completed" | "inProgress" | "unfinished" | "waitingForApproval";
   isImportant: boolean;
@@ -30,6 +31,7 @@ const TaskSchema = new Schema<ITask>(
       enum: ["completed", "inProgress", "unfinished", "waitingForApproval"],
       default: "unfinished",
     },
+    common: { type: Boolean, default: false },
     isImportant: { type: Boolean, default: false },
     order: { type: Number, required: true },
     subtasks: {

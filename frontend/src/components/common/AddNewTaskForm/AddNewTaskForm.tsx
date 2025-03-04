@@ -5,14 +5,15 @@ import { SmallText } from "../Typography/Typography";
 import IconSvg from "../Icons/IconSvg";
 import { StatusType } from "../../../models";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { boolean, number, object, ObjectSchema, string } from "yup";
+import { bool, boolean, number, object, ObjectSchema, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TaskSettings from "../../../containers/TaskSettings/TaskSettings";
 import style from "./AddNewTaskForm.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { fetchAddUserTask } from "../../../store/actions";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { WebSocketContext } from "../../../context/WsContext";
 
 interface AddNewTaskFormProps {
   onClose?: () => void;
@@ -21,6 +22,7 @@ type INewTask = Omit<ITask, "_id">;
 
 const taskSchema: ObjectSchema<INewTask> = object({
   title: string().required(),
+  common: bool().required(),
   description: string().required(),
   status: string<StatusType>().required(),
   isImportant: boolean().required(),
@@ -41,12 +43,14 @@ const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
     defaultValues: {
       title: "",
       description: "",
+      common: false,
       status: "unfinished",
       isImportant: false,
       order: 0,
     },
     resolver: yupResolver(taskSchema),
   });
+  const context = useContext(WebSocketContext);
 
   const currentStatus = watch("status");
   const isImportant = watch("isImportant");
@@ -54,7 +58,20 @@ const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const onSubmit: SubmitHandler<INewTask> = (data) => {
     if (!ownerId) return;
-    dispatch(fetchAddUserTask({ ...data, owner: ownerId }));
+    if (data.common && context) {
+      dispatch(
+        fetchAddUserTask({
+          credentials: { ...data, owner: ownerId },
+          ws: context?.webSocket ?? null,
+        })
+      );
+    } else {
+      fetchAddUserTask({
+        credentials: { ...data, owner: ownerId },
+        ws: null,
+      });
+    }
+
     if (onClose) onClose();
   };
 
@@ -81,6 +98,7 @@ const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
           name="title"
           className={style.title}
         />
+        <input type="checkbox" {...register("common")} />
         <InputBase
           placeholder="Описание"
           name="description"

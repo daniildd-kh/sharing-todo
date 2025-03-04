@@ -7,6 +7,7 @@ export type StatusType =
 export interface ITask {
   _id: string;
   title: string;
+  common: boolean;
   description: string;
   status: StatusType;
   isImportant: boolean;

@@ -54,7 +54,8 @@ export const addTask = async (
   next: NextFunction
 ) => {
   try {
-    const { title, description, status, isImportant, owner, order } = req.body;
+    const { title, description, status, isImportant, owner, order, common } =
+      req.body;
 
     const isUserExist = await UserModel.exists({ _id: owner });
     if (!isUserExist) {
@@ -66,6 +67,7 @@ export const addTask = async (
     const newTask = new TaskModel({
       title,
       description,
+      common,
       status,
       isImportant,
       order: newOrder,

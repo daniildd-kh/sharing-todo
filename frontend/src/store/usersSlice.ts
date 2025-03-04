@@ -4,11 +4,13 @@ import { IUser } from "../models";
 
 interface UsersState {
   users: IUser[] | null;
+  onlineUsers: { email: string; status: string }[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: UsersState = {
+  onlineUsers: [],
   users: null,
   loading: false,
   error: null,
@@ -17,7 +19,11 @@ const initialState: UsersState = {
 const usersSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    setUsers: (state, action) => {
+      state.onlineUsers = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchGetAllUsers.pending, (state) => {
@@ -37,5 +43,7 @@ const usersSlice = createSlice({
       });
   },
 });
+
+export const { setUsers } = usersSlice.actions;
 
 export default usersSlice.reducer;
