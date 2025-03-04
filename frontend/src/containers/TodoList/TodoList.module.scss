@@ -1,0 +1,12 @@
+@use "@/styles/mixins.scss" as *;
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.centerContent {
+  margin-top: 10px;
+  @include center();
+}
