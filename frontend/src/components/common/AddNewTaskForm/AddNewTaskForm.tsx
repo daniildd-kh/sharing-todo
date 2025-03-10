@@ -58,19 +58,13 @@ const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const onSubmit: SubmitHandler<INewTask> = (data) => {
     if (!ownerId) return;
-    if (data.common && context) {
-      dispatch(
-        fetchAddUserTask({
-          credentials: { ...data, owner: ownerId },
-          ws: context?.webSocket ?? null,
-        })
-      );
-    } else {
+    dispatch(
       fetchAddUserTask({
         credentials: { ...data, owner: ownerId },
-        ws: null,
-      });
-    }
+        ws:
+          data.common === true && context ? (context?.webSocket ?? null) : null,
+      })
+    );
 
     if (onClose) onClose();
   };

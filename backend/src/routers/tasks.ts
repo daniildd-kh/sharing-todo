@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   addTask,
-  getAllTasks,
+  getUserAllTasks,
   getUserTasks,
   removeTask,
   reorderedTasks,
@@ -11,7 +11,7 @@ import auth from "../middlewares/auth";
 
 const tasksRouter = Router();
 
-tasksRouter.get("/", getAllTasks);
+tasksRouter.get("/", getUserAllTasks);
 tasksRouter.put("/reorder", reorderedTasks);
 tasksRouter.get("/me", auth, getUserTasks);
 tasksRouter.post("/", addTask);

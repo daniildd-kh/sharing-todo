@@ -19,27 +19,24 @@ import { Task } from "../../components/common/Task/Task";
 import { ITask } from "../../models";
 import SortableTask from "./components/SortableTask";
 import TodoService from "../../services/TodoService";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
 import { fetchGetUserTasks } from "../../store/actions";
 import { LargeText } from "../../components/common/Typography/Typography";
 import Spinner from "../../components/common/Loader/Spinner";
 import style from "./TodoList.module.scss";
 import TodoHeader from "./components/TodoHeader";
 
-const TodoList = () => {
-  const {
-    loading,
-    tasks: reduxTasks,
-    error,
-  } = useSelector((state: RootState) => state.todo);
-  const originTasks = useRef<ITask[]>([]);
-  const [tasks, setTasks] = useState<ITask[]>([]);
-  const dispatch = useDispatch<AppDispatch>();
+interface TodoListProps {
+  loading?: boolean;
+  error?: string | null;
+  reduxTasks: ITask[] | null;
+}
 
-  // useEffect(() => {
-  //   setTasks(tasksList);
-  // }, [tasksList]);
+const TodoList = ({ loading, error, reduxTasks }: TodoListProps) => {
+  const [tasks, setTasks] = useState<ITask[]>([]);
+  const originTasks = useRef<ITask[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchGetUserTasks());

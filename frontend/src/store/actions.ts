@@ -116,10 +116,10 @@ export const fetchAddUserTask = createAsyncThunk<
   { credentials: ITaskRequest; ws: WebSocket | null }
 >("task/me/add", async ({ credentials, ws }) => {
   try {
-    const response = await TodoService.addUserTask(credentials);
     if (ws && ws.readyState === 1) {
       ws.send(JSON.stringify({ type: "updateTodo" }));
     }
+    const response = await TodoService.addUserTask(credentials);
     return response.data.task;
   } catch (error) {
     throw new Error(`Возникла ошибка при создании задачи ${error}`);

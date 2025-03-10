@@ -3,13 +3,16 @@ import { ITask, TaskModel } from "../models/Task";
 import { UserModel } from "../models/User";
 import { NotFoundError } from "../errors/not-found-error";
 
-export const getAllTasks = async (
+export const getUserAllTasks = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const tasks = await TaskModel.find({}).sort({ order: 1 }).populate("owner");
+    const tasks = await TaskModel.find({ common: true })
+      .sort({ order: 1 })
+      .populate("owner");
+    console.log(tasks);
     if (!tasks) {
       res.status(404).json({ message: "Задачи не были найдены" });
       return;
@@ -99,8 +102,9 @@ export const getUserTasks = async (
         throw new NotFoundError("Пользователь не был найден");
       });
 
-    const tasks = user?.tasks;
-    res.status(200).json({ message: "success", tasks: tasks });
+    const tasks = user.tasks as unknown as ITask[];
+    const personalTasks = tasks.filter((task) => task.common === false);
+    res.status(200).json({ message: "success", tasks: personalTasks });
     return;
   } catch (error) {
     return next(error);
