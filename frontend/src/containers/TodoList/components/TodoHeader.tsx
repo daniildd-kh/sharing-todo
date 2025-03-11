@@ -12,9 +12,10 @@ import AddNewTaskForm from "../../../components/common/AddNewTaskForm/AddNewTask
 interface TodoHeaderProps {
   setTasks: React.Dispatch<React.SetStateAction<ITask[]>>;
   originTasks: React.RefObject<ITask[]>;
+  title: string;
 }
 
-const TodoHeader = ({ setTasks, originTasks }: TodoHeaderProps) => {
+const TodoHeader = ({ setTasks, originTasks, title }: TodoHeaderProps) => {
   const [sortStatus, setSortStatus] = useState<StatusType>();
   const [showModal, setShowModal] = useState(false);
 
@@ -60,7 +61,7 @@ const TodoHeader = ({ setTasks, originTasks }: TodoHeaderProps) => {
     <>
       <span className={style.title}>
         <IconSvg name="inbox" size={36} />
-        <Title>Входящие задачи</Title>
+        <Title>{title}</Title>
       </span>
       <div className={style.options}>
         <Button onClick={() => setShowModal(true)} className={style.buttonTodo}>

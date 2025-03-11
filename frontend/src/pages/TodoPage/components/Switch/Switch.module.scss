@@ -1,0 +1,21 @@
+@use "@/styles/variables.scss" as *;
+@use "@/styles/mixins.scss" as *;
+
+.switch {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.button {
+  display: flex;
+  gap: 10px;
+  padding: 8px 10px;
+  background-color: rgba($colorPrimary, 0.8);
+  color: $colorLight;
+  transition: background-color 0.3s ease;
+}
+
+.activeButton {
+  background-color: $colorAccent;
+}

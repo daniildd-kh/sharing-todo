@@ -78,6 +78,18 @@ export const checkAuth = createAsyncThunk("auth/check", async () => {
   }
 });
 
+export const fetchGetCommonTasks = createAsyncThunk(
+  "tasks/commom",
+  async () => {
+    try {
+      const response = await TodoService.getCommonTasks();
+      return response.data.tasks;
+    } catch (error) {
+      throw new Error(`Ошибка во время получения общих задач ${error}`);
+    }
+  }
+);
+
 export const fetchGetUserTasks = createAsyncThunk("tasks/me", async () => {
   try {
     const response = await TodoService.getUserTasks();

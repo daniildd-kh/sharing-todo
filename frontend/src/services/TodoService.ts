@@ -9,6 +9,9 @@ import {
 } from "../models";
 
 export default class TodoService {
+  static async getCommonTasks(): Promise<AxiosResponse<TasksRespose>> {
+    return await $api.get<TasksRespose>("/api/tasks");
+  }
   static async getUserTasks(): Promise<AxiosResponse<TasksRespose>> {
     return await $api.get<TasksRespose>("/api/tasks/me");
   }

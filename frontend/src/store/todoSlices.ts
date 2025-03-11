@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ITask } from "../models";
 import {
   fetchAddUserTask,
+  fetchGetCommonTasks,
   fetchGetUserTasks,
   fetchRemoveUserTask,
   fetchUpdateUserTask,
@@ -9,12 +10,14 @@ import {
 
 interface TodoState {
   tasks: ITask[] | null;
+  commonTasks: ITask[] | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: TodoState = {
   tasks: null,
+  commonTasks: null,
   loading: false,
   error: null,
 };
@@ -33,6 +36,17 @@ const todoSlice = createSlice({
         state.tasks = action.payload;
       })
       .addCase(fetchGetUserTasks.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Ошибка получения задач";
+      })
+      .addCase(fetchGetCommonTasks.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchGetCommonTasks.fulfilled, (state, action) => {
+        state.loading = false;
+        state.commonTasks = action.payload;
+      })
+      .addCase(fetchGetCommonTasks.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Ошибка получения задач";
       })

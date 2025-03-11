@@ -1,17 +1,15 @@
-import TodoList from "../../containers/TodoList/TodoList";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { useState } from "react";
+import TodoCommonList from "../../containers/TodoList/variants/TodoCommonList";
+import TodoUserList from "../../containers/TodoList/variants/TodoUserList";
+import Switch from "./components/Switch/Switch";
 
 const TodoPage = () => {
-  const {
-    loading,
-    tasks: reduxTasks,
-    error,
-  } = useSelector((state: RootState) => state.todo);
+  const [activeTab, setActiveTab] = useState("user");
 
   return (
     <div>
-      <TodoList reduxTasks={reduxTasks} loading={loading} error={error} />
+      <Switch activeTab={activeTab} setActiveTab={setActiveTab} />
+      {activeTab === "user" ? <TodoUserList /> : <TodoCommonList />}
     </div>
   );
 };
