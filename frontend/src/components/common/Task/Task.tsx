@@ -28,13 +28,14 @@ const statusIcon: Record<statusVariant, IconName> = {
   waitingForApproval: "checkmark",
 };
 
-type ITaskCard = Omit<ITask, "order">;
+export type ITaskCard = Omit<ITask, "order">;
 
 interface TaskProps {
   _id?: string;
   status?: statusVariant;
   isImportant?: boolean;
   title?: string;
+  common?: boolean;
   description?: string;
 }
 
@@ -46,6 +47,7 @@ function withTask(defaults: TaskProps) {
     isImportant = defaults.isImportant || false,
     title = "No title",
     description = "No description",
+    common = defaults.common || false,
   }: TaskProps) {
     const taskRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -56,6 +58,7 @@ function withTask(defaults: TaskProps) {
       description,
       isImportant,
       status,
+      common,
     });
     const originalTaskData = useRef<ITaskCard>({ ...taskData });
     const dispatch = useDispatch<AppDispatch>();
@@ -67,7 +70,7 @@ function withTask(defaults: TaskProps) {
     };
 
     const handleRemove = () => {
-      dispatch(fetchRemoveUserTask({ _id: taskData._id }));
+      dispatch(fetchRemoveUserTask(taskData));
     };
 
     const handleCancel = () => {

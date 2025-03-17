@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import AuthService from "../services/AuthService";
-import { AuthResponse, ITaskRequest } from "../models";
+import { AuthResponse, ITask, ITaskRequest } from "../models";
 import $api from "../http";
 import UsersService from "../services/UsersService";
 import TodoService from "../services/TodoService";
@@ -116,7 +116,7 @@ export const fetchRemoveUserTask = createAsyncThunk(
   async (credentials: { _id: string }) => {
     try {
       const response = await TodoService.removeUserTask(credentials);
-      return response.data.task._id;
+      return response.data.task;
     } catch (error) {
       throw new Error(`Возникла ошибка при удалении задачи ${error}`);
     }
@@ -124,8 +124,8 @@ export const fetchRemoveUserTask = createAsyncThunk(
 );
 
 export const fetchAddUserTask = createAsyncThunk<
-  ITaskRequest,
-  { credentials: ITaskRequest; ws: WebSocket | null }
+  ITask,
+  { credentials: ITask; ws: WebSocket | null }
 >("task/me/add", async ({ credentials, ws }) => {
   try {
     if (ws && ws.readyState === 1) {

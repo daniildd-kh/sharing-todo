@@ -109,6 +109,7 @@ const TodoList = ({ loading, error, reduxTasks, title }: TodoListProps) => {
                       isImportant={task.isImportant}
                       title={task.title}
                       description={task.description}
+                      common={task.common}
                     />
                   </SortableTask>
                 );

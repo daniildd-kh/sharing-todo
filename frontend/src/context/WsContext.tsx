@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store/store";
 import { setStatus } from "../store/authSlices";
 import { setUsers } from "../store/usersSlice";
+import { updateTasks } from "../store/todoSlices";
 
 interface WebSocketContextType {
   webSocket?: WebSocket | null;
@@ -48,7 +49,7 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
           break;
         }
         case "updateTodo": {
-          console.log(data);
+          dispatch(updateTasks(data.data));
           break;
         }
         default:
