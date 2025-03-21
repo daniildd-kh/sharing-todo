@@ -44,7 +44,6 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
           break;
         }
         case "updateUsers": {
-          console.log("updateUsers:", data);
           dispatch(setUsers(data.data));
           break;
         }

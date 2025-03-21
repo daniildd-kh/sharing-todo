@@ -6,6 +6,8 @@ import UsersService from "../services/UsersService";
 import TodoService from "../services/TodoService";
 import axios from "axios";
 
+type INewTask = Omit<ITask, "_id">;
+
 export const fetchLogin = createAsyncThunk(
   "auth/login",
   async (
@@ -124,14 +126,16 @@ export const fetchRemoveUserTask = createAsyncThunk(
 );
 
 export const fetchAddUserTask = createAsyncThunk<
-  ITask,
-  { credentials: ITask; ws: WebSocket | null }
+  INewTask,
+  { credentials: INewTask; ws: WebSocket | null }
 >("task/me/add", async ({ credentials, ws }) => {
   try {
-    if (ws && ws.readyState === 1) {
+    const response = await TodoService.addUserTask(credentials);
+
+    if (ws && ws.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify({ type: "updateTodo" }));
     }
-    const response = await TodoService.addUserTask(credentials);
+
     return response.data.task;
   } catch (error) {
     throw new Error(`Возникла ошибка при создании задачи ${error}`);

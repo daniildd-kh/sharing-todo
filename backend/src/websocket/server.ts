@@ -26,15 +26,19 @@ const authenticateUser = async (token: string): Promise<string | null> => {
   }
 };
 
-export const initSocket = (server: any) => {
-  const wss = new WebSocket.Server({ server });
-
-  async function updateTodo() {
+const updateTodo = async () => {
+  try {
     const todo = await TaskModel.find({
       common: { $ne: false, $exists: true },
     });
-    broadcast({ type: "updateTodo", data: Array.from(todo) });
+    return todo;
+  } catch {
+    return null;
   }
+};
+
+export const initSocket = (server: any) => {
+  const wss = new WebSocket.Server({ server });
 
   function broadcast(data: any) {
     const message = JSON.stringify(data);
@@ -46,15 +50,17 @@ export const initSocket = (server: any) => {
   }
 
   wss.on("connection", (ws) => {
-    console.log("Client connected");
     let userEmail: string | null;
 
     ws.on("message", async (data) => {
       try {
         const message = JSON.parse(data.toString()) as AuthSocket;
-
         if (message.type === "updateTodo") {
-          updateTodo();
+          console.log("updated todo ", message.type);
+          const todo = await updateTodo();
+          if (todo) {
+            broadcast({ type: "updateTodo", data: Array.from(todo) });
+          }
         }
         if (message.type === "auth") {
           userEmail = await authenticateUser(message.token);
