@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import IconSvg from "../../../components/common/Icons/IconSvg";
-import { Title, Text } from "../../../components/common/Typography/Typography";
+import { Text } from "../../../components/common/Typography/Typography";
 import { Button } from "../../../components/common/Button/Button";
 import style from "./TodoHeader.module.scss";
 import Filter from "../../../pages/TodoPage/components/Filter/Filter";
@@ -8,6 +8,7 @@ import Search from "../../../pages/TodoPage/components/Search/Search";
 import { ITask, StatusType } from "../../../models";
 import { Modal } from "../../../components/common/Modal/Modal";
 import AddNewTaskForm from "../../../components/common/AddNewTaskForm/AddNewTaskForm";
+import TitlePage from "../../../components/common/TitlePage/TitlePage";
 
 interface TodoHeaderProps {
   setTasks: React.Dispatch<React.SetStateAction<ITask[]>>;
@@ -32,7 +33,7 @@ const TodoHeader = ({ setTasks, originTasks, title }: TodoHeaderProps) => {
     if (sortStatus) {
       sortByStatus(sortStatus);
     }
-  }, [sortStatus]);
+  }, [sortStatus, setTasks]);
 
   const sortByPriority = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked;
@@ -59,10 +60,7 @@ const TodoHeader = ({ setTasks, originTasks, title }: TodoHeaderProps) => {
 
   return (
     <>
-      <span className={style.title}>
-        <IconSvg name="inbox" size={36} />
-        <Title>{title}</Title>
-      </span>
+      <TitlePage icon="inbox" title={title} />
       <div className={style.options}>
         <Button onClick={() => setShowModal(true)} className={style.buttonTodo}>
           <IconSvg name="add" />
