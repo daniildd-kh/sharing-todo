@@ -11,11 +11,11 @@ import auth from "../middlewares/auth";
 
 const tasksRouter = Router();
 
-tasksRouter.get("/", getUserAllTasks);
-tasksRouter.put("/reorder", reorderedTasks);
+tasksRouter.get("/", auth, getUserAllTasks);
+tasksRouter.put("/reorder", auth, reorderedTasks);
 tasksRouter.get("/me", auth, getUserTasks);
-tasksRouter.post("/", addTask);
-tasksRouter.delete("/:id", removeTask);
-tasksRouter.put("/:id", updateTask);
+tasksRouter.post("/", auth, addTask);
+tasksRouter.delete("/:id", auth, removeTask);
+tasksRouter.put("/:id", auth, updateTask);
 
 export default tasksRouter;

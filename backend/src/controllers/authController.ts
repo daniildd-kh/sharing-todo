@@ -5,9 +5,9 @@ import bcrypt from "bcrypt";
 import { TokenModel } from "../models/Token";
 import ms from "ms";
 
-const JWT_ACCESS_SECRET: string = process.env.JWT_SECRET || "secret-jwt";
+const JWT_ACCESS_SECRET: string = process.env.JWT_ACCESS_SECRET || "secret-jwt";
 const JWT_REFRESH_SECRET: string =
-  process.env.JWT_SECRET || "secret-refresh-jwt";
+  process.env.JWT_REFRESH_SECRET || "secret-refresh-jwt";
 
 const generateTokens = (userId: string) => {
   const accessToken = jwt.sign(
@@ -171,7 +171,7 @@ export const refreshAccessToken = async (req: Request, res: Response) => {
 };
 
 export const logoutUser = async (req: Request, res: Response) => {
-  try{
+  try {
     const { refreshToken } = req.cookies;
     if (!refreshToken) {
       res.status(400).send({ message: "Необходима авторизация" });

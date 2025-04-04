@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
-const JWT_ACCESS_SECRET: string = process.env.JWT_SECRET || "secret-jwt";
+const JWT_ACCESS_SECRET: string = process.env.JWT_ACCESS_SECRET || "secret-jwt";
 
-interface RequestWithUserData extends Request {
+export interface RequestWithUserData extends Request {
   user?: { id: string };
 }
 
@@ -22,15 +22,20 @@ export default (
   }
 
   const token = authorization.split(" ")[1];
+  try {
+    const payload = jwt.verify(token, JWT_ACCESS_SECRET) as { id: string };
 
-  const payload = jwt.verify(token, JWT_ACCESS_SECRET) as { id: string };
-
-  if (!payload) {
+    if (!payload) {
+      res.status(401).send({
+        message: "Необходима авторизация",
+      });
+      return;
+    }
+    req.user = { id: payload.id };
+    next();
+  } catch (error) {
     res.status(401).send({
-      message: "Необходима авторизация",
+      message: "Ошибка авторизации",
     });
-    return;
   }
-  req.user = { id: payload.id };
-  next();
 };
