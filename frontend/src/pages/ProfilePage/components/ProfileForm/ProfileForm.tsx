@@ -81,73 +81,80 @@ const ProfileForm = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate className={style.form}>
-        <InputForm
-          text="Полное имя"
-          className={style.inputWrapper}
-          error={errors.fullName}
-        >
-          <Input register={register} name="fullName" className={style.input} />
-        </InputForm>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <div className={style.form}>
+          <InputForm
+            text="Полное имя"
+            className={style.inputWrapper}
+            error={errors.fullName}
+          >
+            <Input
+              register={register}
+              name="fullName"
+              className={style.input}
+            />
+          </InputForm>
 
-        <InputForm text="Псевдоним" error={errors.name}>
-          <Input register={register} name="name" className={style.input} />
-        </InputForm>
+          <InputForm text="Псевдоним" error={errors.name}>
+            <Input register={register} name="name" className={style.input} />
+          </InputForm>
 
-        <InputForm text="Страна" error={errors.country}>
-          <Input register={register} name="country" className={style.input} />
-        </InputForm>
+          <InputForm text="Страна" error={errors.country}>
+            <Input register={register} name="country" className={style.input} />
+          </InputForm>
 
-        <InputForm text="Язык" error={errors.language}>
-          <Select<IProfile>
-            register={register}
-            name="language"
-            options={Object.values(LanguageEnum)}
-          />
-        </InputForm>
+          <InputForm text="Язык" error={errors.language}>
+            <Select<IProfile>
+              register={register}
+              name="language"
+              options={Object.values(LanguageEnum)}
+            />
+          </InputForm>
 
-        <InputForm text="Пол" error={errors.gender}>
-          <Select<IProfile>
-            register={register}
-            name="gender"
-            options={Object.values(GenderEnum)}
-          />
-        </InputForm>
+          <InputForm text="Пол" error={errors.gender}>
+            <Select<IProfile>
+              register={register}
+              name="gender"
+              options={Object.values(GenderEnum)}
+            />
+          </InputForm>
 
-        <InputForm text="Email" error={errors.email}>
-          <InputEmail
-            register={register}
-            name="email"
-            className={style.input}
-          />
-        </InputForm>
+          <InputForm text="Email" error={errors.email}>
+            <InputEmail
+              register={register}
+              name="email"
+              className={style.input}
+            />
+          </InputForm>
 
-        <div>
-          <InputPassword
-            name={"password"}
-            register={register}
-            className={style.input}
-          />
+          <div>
+            <InputPassword
+              name={"password"}
+              register={register}
+              className={style.input}
+            />
+          </div>
         </div>
 
         {errorStore && (
           <SmallText className={style.error}>{errorStore}</SmallText>
         )}
+
+        {isDirty && (
+          <div className={style.options}>
+            <Button type="button" onClick={onCancel} className={style.cancel}>
+              Отмена
+            </Button>
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className={style.confirm}
+            >
+              {isSubmitting ? <Spinner /> : "Сохранить"}
+            </Button>
+          </div>
+        )}
       </form>
-      {isDirty && (
-        <div className={style.options}>
-          <Button type="button" onClick={onCancel} className={style.cancel}>
-            Отмена
-          </Button>
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            className={style.confirm}
-          >
-            {isSubmitting ? <Spinner /> : "Сохранить"}
-          </Button>
-        </div>
-      )}
     </>
   );
 };
