@@ -22,6 +22,16 @@ const ProfileForm = () => {
     (state: RootState) => state.auth
   );
 
+  const genderOptions = [
+    { label: "Мужской", value: GenderEnum.male },
+    { label: "Женский", value: GenderEnum.female },
+  ];
+
+  const languageOptions = [
+    { label: "Английский", value: LanguageEnum.english },
+    { label: "Русский", value: LanguageEnum.russian },
+  ];
+
   const {
     register,
     handleSubmit,
@@ -107,7 +117,7 @@ const ProfileForm = () => {
             <Select<IProfile>
               register={register}
               name="language"
-              options={Object.values(LanguageEnum)}
+              options={languageOptions}
             />
           </InputForm>
 
@@ -115,7 +125,7 @@ const ProfileForm = () => {
             <Select<IProfile>
               register={register}
               name="gender"
-              options={Object.values(GenderEnum)}
+              options={genderOptions}
             />
           </InputForm>
 

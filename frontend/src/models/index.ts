@@ -17,13 +17,13 @@ export interface ITask {
 }
 
 export enum GenderEnum {
-  female = "Женский",
-  male = "Мужской",
+  female = "female",
+  male = "male",
 }
 
 export enum LanguageEnum {
-  russian = "Русский",
-  english = "Английский",
+  russian = "russian",
+  english = "english",
 }
 
 export type ITaskRequest = Partial<ITask>;

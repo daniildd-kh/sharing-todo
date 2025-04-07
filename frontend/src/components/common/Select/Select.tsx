@@ -5,7 +5,7 @@ import style from "./Select.module.scss";
 interface SelectProps<T extends FieldValues> {
   register: UseFormRegister<T>;
   name: Path<T>;
-  options: string[];
+  options: { label: string; value: string }[];
 }
 
 function Select<T extends FieldValues>({
@@ -16,8 +16,8 @@ function Select<T extends FieldValues>({
   return (
     <select className={style.select} {...register(name)}>
       {options.map((option) => (
-        <option key={option} value={option}>
-          {option}
+        <option key={option.value} value={option.value}>
+          {option.label}
         </option>
       ))}
     </select>

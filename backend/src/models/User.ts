@@ -5,6 +5,8 @@ export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
+  fullName: string;
+
   tasks: Types.ObjectId[];
   createdAt?: Date;
   updatedAt?: Date;
