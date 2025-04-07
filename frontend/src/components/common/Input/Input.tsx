@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
 import clsx from "clsx";
 import style from "./Input.module.scss";
 import { FieldValues, Path, UseFormRegister } from "react-hook-form";
@@ -6,43 +6,51 @@ import { FieldValues, Path, UseFormRegister } from "react-hook-form";
 type inputVariant = "text" | "password" | "email";
 type inputStyle = "baseText" | "title";
 
-interface InputProps<T extends FieldValues>
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps<T extends FieldValues>
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "value" | "onChange"
+  > {
   inputType?: inputVariant;
-  value?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   name: Path<T>;
-  register?: UseFormRegister<T>;
+  register: UseFormRegister<T>;
   placeholder?: string;
   onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
   styleType?: inputStyle;
+  defaultValue?: string;
 }
 
 function withInput<T extends FieldValues>(defaults: Partial<InputProps<T>>) {
-  return function Input({
-    inputType = defaults.inputType || "text",
-    value,
-    className,
-    placeholder,
-    onClick,
-    onChange,
-    name,
-    register,
-    styleType = defaults.styleType || "title",
-    ...props
-  }: InputProps<T>) {
+  return function Input(props: InputProps<T>) {
+    const {
+      inputType = defaults.inputType || "text",
+      className,
+      placeholder,
+      onClick,
+      name,
+      register,
+      styleType = defaults.styleType || "title",
+      defaultValue,
+      ...rest
+    } = props;
+
+    const registeredProps = register(name);
+
     return (
       <input
-        value={value}
-        {...(register ? register(name) : {})}
-        onClick={onClick}
-        className={clsx(style.input, style[styleType], className)}
+        {...registeredProps}
+        className={clsx(
+          style.input,
+          style[styleType],
+          { disabled: [style.disabled] },
+          className
+        )}
         placeholder={placeholder}
-        onChange={onChange}
         type={inputType}
-        name={name}
-        {...props}
+        onClick={onClick}
+        defaultValue={defaultValue ?? ""}
+        {...rest}
       />
     );
   };

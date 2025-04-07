@@ -14,6 +14,7 @@ import TodoPage from "./pages/TodoPage/TodoPage";
 import { authChecked } from "./store/authSlices";
 import Layout from "./containers/Layout/Layout";
 import { WebSocketProvider } from "./context/WsContext";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 function App() {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -39,6 +40,7 @@ function App() {
           <Route element={<AuthLayout />}>
             <Route path="/users" element={<UsersPage />} />
             <Route path="/todo" element={<TodoPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/logout" element={<LoginPage />} />
           </Route>
         </Route>

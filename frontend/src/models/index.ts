@@ -16,12 +16,26 @@ export interface ITask {
   owner?: string;
 }
 
+export enum GenderEnum {
+  female = "Женский",
+  male = "Мужской",
+}
+
+export enum LanguageEnum {
+  russian = "Русский",
+  english = "Английский",
+}
+
 export type ITaskRequest = Partial<ITask>;
 
 export interface IUser {
   _id: string;
   name: string;
   email: string;
+  fullName?: string;
+  gender?: GenderEnum;
+  language?: LanguageEnum;
+  country?: string;
   tasks: ITask[];
 }
 

@@ -1,0 +1,42 @@
+@use "@/styles/mixins.scss" as *;
+@use "@/styles/variables.scss" as *;
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.input {
+  @include styledInput();
+}
+
+.cancel {
+  background-color: rgba($colorDark, 0.2);
+  color: $fontColorDark;
+  padding: 8px 10px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: rgba($colorDark, 0.3);
+  }
+}
+
+.confirm {
+  display: flex;
+  gap: 10px;
+  padding: 8px 10px;
+  background-color: rgba($colorPrimary, 0.8);
+  color: $colorLight;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $colorPrimary;
+  }
+}
+
+.options {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

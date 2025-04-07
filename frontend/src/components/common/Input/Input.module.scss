@@ -15,3 +15,20 @@
     font-size: $fontSizeBase;
   }
 }
+
+.checkbox {
+  display: flex;
+  align-items: center;
+
+  input[type="checkbox"] {
+    accent-color: $colorPrimary;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}

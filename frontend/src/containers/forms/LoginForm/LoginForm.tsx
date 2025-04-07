@@ -6,20 +6,18 @@ import commonStyles from "../forms.module.scss";
 import { object, ObjectSchema, string } from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  createInputEmail,
-  createInputPassword,
-} from "../../../components/common/Input/Input";
+import { createInputEmail } from "../../../components/common/Input/Input";
 import {
   SmallText,
   Text,
   Title,
 } from "../../../components/common/Typography/Typography";
 import { Button } from "../../../components/common/Button/Button";
-import { useRef } from "react";
 import { Logo } from "../../../components/common/Logo/Logo";
 import InputForm from "../components/InputForm";
 import Spinner from "../../../components/common/Loader/Spinner";
+import InputPassword from "../../../components/common/Input/InputPassword";
+import { useMemo } from "react";
 
 interface ILogin {
   email: string;
@@ -56,23 +54,8 @@ const LoginForm = () => {
       .unwrap()
       .then(() => navigate(from, { replace: true }));
   };
-  const inputRef = useRef<HTMLDivElement>(null);
 
-  const showPassword = () => {
-    if (inputRef.current) {
-      const passRef = inputRef.current.querySelector(
-        "#pass"
-      ) as HTMLInputElement;
-      if (passRef.type === "password") {
-        passRef.type = "text";
-      } else {
-        passRef.type = "password";
-      }
-    }
-  };
-
-  const InputEmail = createInputEmail<ILogin>();
-  const InputPassword = createInputPassword<ILogin>();
+  const InputEmail = useMemo(() => createInputEmail<ILogin>(), []);
 
   return (
     <div className={commonStyles.container}>
@@ -100,20 +83,12 @@ const LoginForm = () => {
               className={commonStyles.input}
             />
           </InputForm>
-          <InputForm error={errors.password} text={"Пароль"} ref={inputRef}>
-            <InputPassword
-              id="pass"
-              register={register}
-              name="password"
-              className={commonStyles.input}
-            />
-          </InputForm>
-          <div>
-            <div className={commonStyles.checkbox}>
-              <input type="checkbox" onClick={showPassword} />{" "}
-              <Text>Показать пароль</Text>
-            </div>
-          </div>
+          <InputPassword
+            register={register}
+            name={"password"}
+            className={commonStyles.input}
+            error={errors.password}
+          />
           {errorStore && (
             <SmallText className={commonStyles.error}>{errorStore}</SmallText>
           )}

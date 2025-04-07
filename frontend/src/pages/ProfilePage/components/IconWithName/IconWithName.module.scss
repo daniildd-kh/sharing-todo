@@ -1,0 +1,11 @@
+.iconWithText {
+  display: flex;
+  gap: 10px;
+  margin-block: 20px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

@@ -12,7 +12,7 @@ import style from "./AddNewTaskForm.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { fetchAddUserTask } from "../../../store/actions";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { WebSocketContext } from "../../../context/WsContext";
 
 interface AddNewTaskFormProps {
@@ -73,8 +73,8 @@ const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
     reset();
   }, [isSubmitSuccessful]);
 
-  const Input = createInput<INewTask>();
-  const InputBase = createInputBase<INewTask>();
+  const Input = useMemo(() => createInput<INewTask>(), []);
+  const InputBase = useMemo(() => createInputBase<INewTask>(), []);
 
   const handleStatus = (status: StatusType) => {
     setValue("status", status);

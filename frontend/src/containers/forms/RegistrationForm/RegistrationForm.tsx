@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { fetchRegistration } from "../../../store/actions";
@@ -69,9 +69,9 @@ const RegistrationForm = () => {
     }
   };
 
-  const Input = createInputBase<IRegistration>();
-  const InputPassword = createInputPassword<IRegistration>();
-  const InputEmail = createInputEmail<IRegistration>();
+  const Input = useMemo(() => createInputBase<IRegistration>(), []);
+  const InputPassword = useMemo(() => createInputPassword<IRegistration>(), []);
+  const InputEmail = useMemo(() => createInputEmail<IRegistration>(), []);
 
   const onSubmit: SubmitHandler<IRegistration> = (data) => {
     const { name, email, password } = data;

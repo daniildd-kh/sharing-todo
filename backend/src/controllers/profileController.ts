@@ -5,7 +5,6 @@ import bcrypt from "bcrypt";
 
 interface UpdateData {
   name?: string;
-  email?: string;
   password?: string;
 }
 
@@ -20,11 +19,10 @@ export const updateProfile = async (
       return;
     }
     const userId = req.user.id;
-    const { name, email, password } = req.body;
+    const { name, password } = req.body;
 
     const updateData: UpdateData = {};
     if (name) updateData.name = name;
-    if (email) updateData.email = email;
     if (password) updateData.password = await bcrypt.hash(password, 5);
 
     const updatedProfile = await UserModel.findByIdAndUpdate(

@@ -1,3 +1,5 @@
+@use "@/styles/variables.scss" as *;
+
 @mixin size($value: 100%) {
   width: $value;
   height: $value;
@@ -11,4 +13,12 @@
 
 @mixin transition($properties, $duration: 0.3s, $timing-function: ease) {
   transition: $properties $duration $timing-function;
+}
+
+@mixin styledInput() {
+  border: 1px solid rgba($colorDark, 0.8) !important;
+  width: 100%;
+  padding: 5px !important;
+  border-radius: 10px;
+  box-sizing: border-box;
 }
