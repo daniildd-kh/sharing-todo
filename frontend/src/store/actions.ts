@@ -5,6 +5,7 @@ import $api from "../http";
 import UsersService from "../services/UsersService";
 import TodoService from "../services/TodoService";
 import axios from "axios";
+import { IProfile } from "../pages/ProfilePage/components/ProfileForm/ProfileForm";
 
 type INewTask = Omit<ITask, "_id">;
 
@@ -141,3 +142,15 @@ export const fetchAddUserTask = createAsyncThunk<
     throw new Error(`Возникла ошибка при создании задачи ${error}`);
   }
 });
+
+export const fetchUpdateProfile = createAsyncThunk(
+  "update/profile",
+  async (credentials: IProfile) => {
+    try {
+      const response = await AuthService.updateProfile(credentials);
+      return response.data.user;
+    } catch (error) {
+      throw new Error(`Возникла ошибка при обновлении профиля ${error}`);
+    }
+  }
+);

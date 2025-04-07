@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import $api from "../http";
-import { AuthResponse } from "../models";
+import { AuthResponse, ProfileRespose } from "../models";
+import { IProfile } from "../pages/ProfilePage/components/ProfileForm/ProfileForm";
 
 export default class AuthService {
   static async login(credentials: {
@@ -20,5 +21,11 @@ export default class AuthService {
 
   static async logout(): Promise<void> {
     return await $api.post("/api/auth/logout");
+  }
+
+  static async updateProfile(
+    credentials: IProfile
+  ): Promise<AxiosResponse<ProfileRespose>> {
+    return await $api.post<ProfileRespose>("/api/profile/update/", credentials);
   }
 }

@@ -60,6 +60,16 @@ export interface TaskRespose {
   task: ITask;
 }
 
+export interface TaskRespose {
+  message: string;
+  task: ITask;
+}
+
+export interface ProfileRespose {
+  message: string;
+  user: IUser;
+}
+
 export type ResposeWithMessage = {
   message: string;
 };

@@ -8,16 +8,18 @@ import {
 } from "../../../../components/common/Input/Input";
 import Select from "../../../../components/common/Select/Select";
 import InputPassword from "../../../../components/common/Input/InputPassword";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../store/store";
 import { GenderEnum, IUser, LanguageEnum } from "../../../../models";
 import { Button } from "../../../../components/common/Button/Button";
 import Spinner from "../../../../components/common/Loader/Spinner";
 import { SmallText } from "../../../../components/common/Typography/Typography";
+import { fetchUpdateProfile } from "../../../../store/actions";
 
-type IProfile = IUser & { password: string };
+export type IProfile = IUser & { password: string };
 
 const ProfileForm = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const { user, error: errorStore } = useSelector(
     (state: RootState) => state.auth
   );
@@ -65,7 +67,7 @@ const ProfileForm = () => {
 
   const onSubmit: SubmitHandler<IProfile> = async (data) => {
     try {
-      console.log("Обновлённые данные пользователя:", data);
+      dispatch(fetchUpdateProfile(data));
       reset(data);
     } catch (error) {
       console.error("Ошибка при сохранении данных:", error);
