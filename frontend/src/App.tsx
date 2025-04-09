@@ -39,7 +39,11 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route element={<AuthLayout />}>
             <Route path="/users" element={<UsersPage />} />
-            <Route path="/todo" element={<TodoPage />} />
+            <Route path="/todo" element={<TodoPage activePage="user" />} />
+            <Route
+              path="/genaral-tasks"
+              element={<TodoPage activePage="general" />}
+            />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/logout" element={<LoginPage />} />
           </Route>

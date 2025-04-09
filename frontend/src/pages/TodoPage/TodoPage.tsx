@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodoCommonList from "../../containers/TodoList/variants/TodoCommonList";
 import TodoUserList from "../../containers/TodoList/variants/TodoUserList";
-import Switch from "./components/Switch/Switch";
+import Switch, { TodoSection } from "./components/Switch/Switch";
 
-const TodoPage = () => {
-  const [activeTab, setActiveTab] = useState("user");
+interface TodoPageProps {
+  activePage: TodoSection;
+}
+
+const TodoPage = ({ activePage }: TodoPageProps) => {
+  const [activeTab, setActiveTab] = useState(activePage);
+
+  useEffect(() => {
+    setActiveTab(activePage);
+  }, [activePage]);
 
   return (
     <div>
