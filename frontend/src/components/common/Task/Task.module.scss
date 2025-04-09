@@ -173,3 +173,18 @@
     background-color: rgba($colorDark, 0.3);
   }
 }
+
+.author {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  margin-block: 5px;
+}
+
+.authorText {
+  display: flex;
+}
+
+.smallBold {
+  font-weight: bold;
+}

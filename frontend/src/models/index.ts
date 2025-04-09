@@ -4,6 +4,8 @@ export type StatusType =
   | "unfinished"
   | "waitingForApproval";
 
+type TOwner = { _id: string; name: string };
+
 export interface ITask {
   _id: string;
   title: string;
@@ -13,7 +15,7 @@ export interface ITask {
   isImportant: boolean;
   order: number;
   // subtasks?: ITask;
-  owner?: string;
+  owner?: TOwner;
 }
 
 export enum GenderEnum {

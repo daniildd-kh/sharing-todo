@@ -40,6 +40,7 @@ const TodoList = ({ loading, error, reduxTasks, title }: TodoListProps) => {
       const sortedTasks = [...reduxTasks].sort((a, b) => a.order - b.order);
       setTasks(sortedTasks);
       originTasks.current = sortedTasks;
+      console.log(reduxTasks);
     }
   }, [reduxTasks]);
 
@@ -110,6 +111,7 @@ const TodoList = ({ loading, error, reduxTasks, title }: TodoListProps) => {
                       title={task.title}
                       description={task.description}
                       common={task.common}
+                      author={task.common ? task.owner?.name : null}
                     />
                   </SortableTask>
                 );

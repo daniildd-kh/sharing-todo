@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent, MouseEventHandler } from "react";
 import clsx from "clsx";
 import style from "./Input.module.scss";
 import { FieldValues, Path, UseFormRegister } from "react-hook-form";
@@ -55,6 +55,32 @@ function withInput<T extends FieldValues>(defaults: Partial<InputProps<T>>) {
     );
   };
 }
+
+interface CommonInputProps {
+  className: string;
+  value: string;
+  name: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onClick: MouseEventHandler<HTMLInputElement>;
+}
+
+export const CommonInput = ({
+  className,
+  value,
+  name,
+  onChange,
+  onClick,
+}: CommonInputProps) => {
+  return (
+    <input
+      value={value}
+      className={clsx(style.input, className)}
+      name={name}
+      onChange={onChange}
+      onClick={onClick}
+    />
+  );
+};
 
 export const createInput = <T extends FieldValues>() => withInput<T>({});
 export const createInputBase = <T extends FieldValues>() =>

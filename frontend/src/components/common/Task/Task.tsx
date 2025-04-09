@@ -3,7 +3,7 @@ import { LargeText, SmallText } from "../Typography/Typography";
 import IconSvg, { IconName } from "../Icons/IconSvg";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import Textarea from "../Textarea/Textarea";
-import { createInput } from "../Input/Input";
+import { CommonInput, createInput } from "../Input/Input";
 import AccordionWithTrigger from "../Accordion/AccordionWithTrigger";
 import TaskSettings from "../../../containers/TaskSettings/TaskSettings";
 import { ITask, StatusType } from "../../../models";
@@ -37,15 +37,16 @@ interface TaskProps {
   title?: string;
   common?: boolean;
   description?: string;
+  author?: string | null;
 }
 
 function withTask(defaults: TaskProps) {
-  const Input = createInput();
   return function Task({
     _id = defaults._id || "",
     status = defaults.status || "unfinished",
     isImportant = defaults.isImportant || false,
     title = "No title",
+    author = null,
     description = "No description",
     common = defaults.common || false,
   }: TaskProps) {
@@ -208,13 +209,12 @@ function withTask(defaults: TaskProps) {
               {taskData.title}
             </LargeText>
           ) : (
-            <Input
+            <CommonInput
               className={style.title}
               value={taskData.title}
               name="title"
               onChange={changeTask}
               onClick={(e) => e.stopPropagation()}
-              register={undefined}
             />
           )}
           {taskData.isImportant && (
@@ -233,6 +233,14 @@ function withTask(defaults: TaskProps) {
               value={taskData.description}
               onChange={changeTask}
             />
+          )}
+          {author && (
+            <div className={style.author}>
+              <span className={style.authorText}>
+                <SmallText>Автор:&nbsp;</SmallText>{" "}
+                <SmallText className={style.smallBold}>{author}</SmallText>
+              </span>
+            </div>
           )}
           {isChange && (
             <div className={style.action}>

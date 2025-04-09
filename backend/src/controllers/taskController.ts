@@ -11,7 +11,7 @@ export const getUserAllTasks = async (
   try {
     const tasks = await TaskModel.find({ common: true })
       .sort({ order: 1 })
-      .populate("owner");
+      .populate("owner", "name");
     if (!tasks) {
       res.status(404).json({ message: "Задачи не были найдены" });
       return;
