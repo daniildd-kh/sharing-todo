@@ -12,7 +12,7 @@ import style from "./AddNewTaskForm.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { fetchAddUserTask } from "../../../store/actions";
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { WebSocketContext } from "../../../context/WsContext";
 
 interface AddNewTaskFormProps {
@@ -54,6 +54,7 @@ const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
 
   const currentStatus = watch("status");
   const isImportant = watch("isImportant");
+  const [commonCheck, setCommonCheck] = useState(false);
   const ownerId = useSelector((state: RootState) => state.auth.user?._id);
   const dispatch = useDispatch<AppDispatch>();
   const onSubmit: SubmitHandler<INewTask> = (data) => {
@@ -92,7 +93,16 @@ const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
           name="title"
           className={style.title}
         />
-        <input type="checkbox" {...register("common")} />
+        <div className={style.checkbox}>
+          <input
+            type="checkbox"
+            {...register("common")}
+            onClick={() => {
+              setCommonCheck(!commonCheck);
+            }}
+          />
+          <SmallText>Общая задача</SmallText>
+        </div>
         <InputBase
           placeholder="Описание"
           name="description"
@@ -109,8 +119,17 @@ const AddNewTaskForm = ({ onClose }: AddNewTaskFormProps) => {
       <div className={style.divider}></div>
       <div className={style.bottom}>
         <div className={style.inbox}>
-          <IconSvg name="inbox" size={13} />
-          <SmallText className={style.bold}>Входящие</SmallText>
+          {commonCheck ? (
+            <>
+              <IconSvg name="users" size={13} />
+              <SmallText className={style.bold}>Общие</SmallText>
+            </>
+          ) : (
+            <>
+              <IconSvg name="inbox" size={13} />
+              <SmallText className={style.bold}>Входящие</SmallText>
+            </>
+          )}
         </div>
         <div className={style.actions}>
           <Button className={style.cancel} onClick={onClose} type="button">

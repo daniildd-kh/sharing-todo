@@ -69,3 +69,14 @@
     background-color: $colorPrimary;
   }
 }
+
+.checkbox {
+  display: flex;
+  align-items: center;
+
+  input[type="checkbox"] {
+    accent-color: $colorPrimary;
+    width: 16px;
+    height: 16px;
+  }
+}
