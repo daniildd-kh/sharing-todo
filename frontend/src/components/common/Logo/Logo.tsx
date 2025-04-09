@@ -10,24 +10,24 @@ interface LogoProps {
 
 export const Logo = ({ logoSize }: LogoProps) => {
   return (
-    <Link
+    <div
       className={style.logo}
-      to="/"
       style={{
         width: logoSize ? logoSize * 2 : 40,
         height: logoSize ? logoSize * 2 : 40,
       }}
     >
       <IconSvg name="todo" size={logoSize ? logoSize : 24} />
-    </Link>
+    </div>
   );
 };
 
 export const LogoWithTitle = ({ title }: { title: string }) => {
   return (
-    <div className={style.logoContainer}>
+    <Link className={style.logoContainer} to="/">
       <Logo />
+
       <Text className={style.text}>{title}</Text>
-    </div>
+    </Link>
   );
 };
