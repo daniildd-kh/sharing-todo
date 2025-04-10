@@ -36,7 +36,9 @@ const UsersPage = () => {
     <div>
       <TitlePage icon="users" title="Список пользователей" />
       {loading && <p>Загрузка...</p>}
-      {usersWithStatus && <UserList users={usersWithStatus} />}
+      {users && onlineUsers && usersWithStatus.length > 0 && (
+        <UserList users={usersWithStatus} />
+      )}
       {error && <p>{error}</p>}
     </div>
   );

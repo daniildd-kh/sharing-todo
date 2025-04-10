@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./Logo.module.scss";
 import IconSvg from "../Icons/IconSvg";
-import { Text } from "../Typography/Typography";
+import { LargeText } from "../Typography/Typography";
 import { Link } from "react-router";
 
 interface LogoProps {
@@ -27,7 +27,7 @@ export const LogoWithTitle = ({ title }: { title: string }) => {
     <Link className={style.logoContainer} to="/">
       <Logo />
 
-      <Text className={style.text}>{title}</Text>
+      <LargeText className={style.text}>{title}</LargeText>
     </Link>
   );
 };
