@@ -1,11 +1,12 @@
 import React from "react";
-import style from "./Header.module.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import Menu from "../Menu/Menu";
 import { LogoWithTitle } from "../../components/common/Logo/Logo";
 import { Button } from "../../components/common/Button/Button";
 import AccordionWithTrigger from "../../components/common/Accordion/AccordionWithTrigger";
+import { Link } from "react-router";
+import style from "./Header.module.scss";
 
 const Header = () => {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -25,7 +26,7 @@ const Header = () => {
       <LogoWithTitle title={"Sharing Todo"} />
       <div className={style.menuWithUser}>
         <Menu links={menu} />
-        {user && (
+        {user ? (
           <AccordionWithTrigger
             trigger={
               <Button className={style.user} icon={"angle"}>
@@ -35,6 +36,12 @@ const Header = () => {
           >
             <Menu links={menuProfile} vertical={true} />
           </AccordionWithTrigger>
+        ) : (
+          <>
+            <Link to="/login" style={{ all: "unset" }}>
+              <Button className={style.button}>Войти</Button>
+            </Link>
+          </>
         )}
       </div>
     </header>

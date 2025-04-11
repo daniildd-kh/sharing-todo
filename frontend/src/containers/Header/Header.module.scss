@@ -27,3 +27,20 @@
   align-items: center;
   gap: 20px;
 }
+
+.button {
+  display: flex;
+  gap: 10px;
+  padding: 4px 18px;
+  color: $colorLight;
+  background-color: $colorPrimary;
+  transition: background-color 0.3s ease;
+}
+
+.button {
+  background-color: rgba($colorPrimary, 0.8);
+
+  &:hover {
+    background-color: $colorPrimary;
+  }
+}
