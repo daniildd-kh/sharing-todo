@@ -1,0 +1,30 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.benefits {
+  display: flex;
+  gap: 20px;
+}
+
+.benefit {
+  width: 100%;
+  max-width: 200px;
+  border: 1px solid rgba(#000000, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  padding-block: 20px;
+  border-radius: 10px;
+}
+
+.text {
+  font-weight: 500;
+}

@@ -1,0 +1,122 @@
+@use "@/styles/variables.scss" as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.title {
+  align-self: self-start;
+}
+
+.sliderContainer {
+  border: 1px solid rgba($colorDark, 0.1);
+  overflow: hidden;
+  border-radius: 10px;
+  box-sizing: border-box;
+  max-width: 1000px;
+  width: 100%;
+  aspect-ratio: 10 / 6;
+  margin: 0 auto;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  flex-shrink: 0;
+  flex-grow: 0;
+  transition: translate 300ms ease-in-out;
+  clip-path: inset(2px);
+  border-radius: 15px;
+}
+
+.button {
+  all: unset;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  padding: 1rem;
+  cursor: pointer;
+  transition: background-color 100ms ease-in-out;
+}
+
+.button > * {
+  stroke: $colorPrimary;
+  fill: $colorPrimary;
+}
+
+.button:hover {
+  background-color: rgba($colorDark, 0.1);
+}
+
+.btnLeft {
+  transform: rotate(90deg);
+}
+
+.btnRight {
+  transform: rotate(270deg);
+}
+
+.nav {
+  display: flex;
+  position: absolute;
+  bottom: 5px;
+  gap: 5px;
+  left: 50%;
+  translate: -50%;
+}
+
+.navButton {
+  all: unset;
+  display: block;
+  cursor: pointer;
+  transition:
+    scale,
+    100ms ease-in-out;
+}
+.navButton:hover {
+  transform: scale(1.1);
+}
+
+.circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid $colorPrimary;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $colorLight;
+}
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: $colorPrimary;
+}
+
+.description {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba($colorDark, 0.7);
+  color: $colorLight;
+  padding: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visible {
+  opacity: 1;
+}

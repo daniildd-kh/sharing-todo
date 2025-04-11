@@ -11,12 +11,14 @@ interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
 
 const toHTMLNotation = (textType: TypographyVariant) => {
   switch (textType) {
-    case TypographyVariant.title:
+    case TypographyVariant.extraTitle:
       return "h1";
-    case TypographyVariant.subtitle:
+    case TypographyVariant.title:
       return "h2";
-    case TypographyVariant.largeText:
+    case TypographyVariant.subtitle:
       return "h3";
+    case TypographyVariant.largeText:
+      return "h4";
     default:
       return "p";
   }
@@ -40,6 +42,7 @@ function withTypography(
   };
 }
 
+export const ExtraTitle = withTypography(TypographyVariant.extraTitle);
 export const Title = withTypography(TypographyVariant.title);
 export const SubTitle = withTypography(TypographyVariant.subtitle);
 export const LargeText = withTypography(TypographyVariant.largeText);

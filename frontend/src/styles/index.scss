@@ -3,6 +3,10 @@
 @use "./mixins.scss";
 @use "./fonts.scss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Raleway-Variable", sans-serif;
   background-color: $backgroundColor;
