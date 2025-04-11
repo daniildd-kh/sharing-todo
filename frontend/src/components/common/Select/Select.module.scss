@@ -9,6 +9,9 @@
   font-family: inherit;
   box-sizing: border-box;
   cursor: pointer;
+  background-color: $colorLight;
+  -webkit-appearance: none;
+  font-size: 14px;
 }
 
 .option {
