@@ -44,6 +44,7 @@
   padding: 1rem;
   cursor: pointer;
   transition: background-color 100ms ease-in-out;
+  z-index: 3;
 }
 
 .button > * {
@@ -70,6 +71,7 @@
   gap: 5px;
   left: 50%;
   translate: -50%;
+  z-index: 3;
 }
 
 .navButton {
@@ -115,6 +117,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 2;
+  height: 50px;
 }
 
 .visible {
